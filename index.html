@@ -3,21 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Find My — Ask JP</title>
+<title>bro jp plz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#080b12;
-    --panel:#10151f;
-    --sheet:#141b28;
-    --line:#232c3d;
-    --green:#30d98a;
-    --blue:#5b8cff;
-    --text:#f2f5f9;
-    --text-dim:#93a0b4;
-    --text-faint:#4c5769;
+    --bg:#05050c;
+    --glow1:#ff6b6b;
+    --glow2:#ffa94d;
+    --glow3:#ff6bcb;
+    --glow4:#6b5bff;
+    --green:#3ffca0;
+    --blue:#4da9ff;
+    --dim:#5a5a70;
   }
 
   *{ box-sizing:border-box; }
@@ -25,9 +24,7 @@
   html,body{
     margin:0;
     height:100%;
-    background:var(--ink);
-    color:var(--text);
-    font-family:'Inter', system-ui, -apple-system, sans-serif;
+    background:var(--bg);
     overflow:hidden;
   }
 
@@ -36,280 +33,294 @@
     align-items:center;
     justify-content:center;
     min-height:100vh;
-    padding:24px;
-  }
-
-  .display{ font-family:'Space Grotesk', 'Inter', system-ui, sans-serif; }
-
-  /* ---------- phone frame ---------- */
-
-  .frame{
     position:relative;
-    width:390px;
-    max-width:100%;
-    height:780px;
-    max-height:92vh;
-    background:var(--panel);
-    border-radius:44px;
-    border:1px solid var(--line);
-    box-shadow:
-      0 40px 80px -30px rgba(0,0,0,0.7),
-      0 0 0 8px rgba(255,255,255,0.02) inset;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-  }
-
-  .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:22px 22px 14px;
-    flex-shrink:0;
-  }
-
-  .topbar h1{ font-size:19px; font-weight:600; margin:0; letter-spacing:0.2px; }
-
-  .dots{
-    display:flex; gap:4px; padding:8px;
-    border-radius:10px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid var(--line);
-  }
-  .dots span{ width:3px; height:3px; border-radius:50%; background:var(--text-dim); display:block; }
-
-  /* ---------- connection zone ---------- */
-
-  .link-zone{
-    position:relative;
-    flex:1;
-    min-height:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:26px;
-    padding:0 30px;
-  }
-
-  .pair{
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    gap:0;
-  }
-
-  .person{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-    z-index:2;
-    width:96px;
-  }
-
-  .avatar{
-    width:64px; height:64px;
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    font-size:19px;
-    border:1px solid var(--line);
-  }
-  .avatar.you{ background:linear-gradient(155deg, #2a3a55, #141a26); color:var(--text); }
-  .avatar.jp{ background:linear-gradient(155deg, #3a4b6b, #1b2434); color:var(--text); }
-
-  .person .label{ font-size:12.5px; color:var(--text-dim); text-align:center; }
-
-  .track{
-    position:relative;
-    flex:1;
-    height:2px;
-    margin:0 -6px;
-    top:-24px;
-    background-image: linear-gradient(to right, var(--line) 0 6px, transparent 6px 12px);
-    background-size:12px 2px;
-    background-repeat:repeat-x;
-  }
-
-  .ping{
-    position:absolute;
-    top:50%; left:0;
-    width:9px; height:9px;
-    margin-top:-4.5px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 10px rgba(48,217,138,0.7);
-    opacity:0;
-  }
-  .ping.go{ animation: travel 0.85s ease-in-out; }
-
-  @keyframes travel{
-    0%{ opacity:0; left:0; transform:scale(0.6); }
-    12%{ opacity:1; transform:scale(1); }
-    88%{ opacity:1; }
-    100%{ opacity:0; left:100%; transform:scale(0.6) translateX(-100%); }
-  }
-
-  .status-block{
-    text-align:center;
-    max-width:300px;
-  }
-  .status-block .headline{
-    font-size:15.5px;
-    font-weight:500;
-    margin:0 0 6px;
-    transition:opacity .2s ease;
-  }
-  .status-block .sub{
-    font-size:12.5px;
-    color:var(--text-faint);
-    margin:0;
-  }
-
-  /* ---------- bottom sheet ---------- */
-
-  .sheet{
-    flex-shrink:0;
-    background:var(--sheet);
-    border-top:1px solid var(--line);
-    border-radius:26px 26px 0 0;
-    padding:20px 22px 24px;
-  }
-
-  .bubble{
-    background:rgba(91,140,255,0.1);
-    border:1px solid rgba(91,140,255,0.22);
-    border-radius:16px 16px 16px 4px;
-    padding:12px 14px;
-    font-size:14px;
-    line-height:1.4;
-    margin-bottom:16px;
-    min-height:20px;
-    transition:opacity .18s ease;
-  }
-
-  button.ask{
-    width:100%;
-    padding:14px;
-    border-radius:14px;
-    border:none;
-    background:var(--green);
-    color:#06231a;
-    font-size:15px;
-    font-weight:600;
-    font-family:'Inter', sans-serif;
     cursor:pointer;
-    transition: transform .15s ease, background .2s ease;
   }
-  button.ask:active{ transform:scale(0.97); }
-  button.ask:hover{ background:#3fe89a; }
 
-  .counter{
+  /* ambient background blobs */
+  .blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:0.3;
+    pointer-events:none;
+    z-index:0;
+  }
+  .b1{ width:440px; height:440px; background:var(--glow4); top:-130px; left:-110px; animation: drift1 20s ease-in-out infinite; }
+  .b2{ width:400px; height:400px; background:var(--glow1); bottom:-150px; right:-100px; animation: drift2 24s ease-in-out infinite; }
+  .b3{ width:320px; height:320px; background:var(--glow3); bottom:12%; left:6%; animation: drift3 17s ease-in-out infinite; }
+  .b4{ width:300px; height:300px; background:var(--green); top:8%; right:10%; opacity:0.16; animation: drift2 21s ease-in-out infinite reverse; }
+
+  @keyframes drift1{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(70px,55px); } }
+  @keyframes drift2{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(-60px,-45px); } }
+  @keyframes drift3{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(35px,-35px) scale(1.12); } }
+
+  /* radar tracker rings */
+  .tracker{
+    position:absolute;
+    z-index:1;
+    pointer-events:none;
+  }
+  .tracker .ring{
+    position:absolute;
+    left:50%; top:50%;
+    border:2px solid var(--green);
+    border-radius:50%;
+    transform:translate(-50%,-50%) scale(0.4);
+    opacity:0;
+    animation: ring-pulse 2.6s ease-out infinite;
+  }
+  .tracker .ring.r2{ animation-delay:0.65s; }
+  .tracker .ring.r3{ animation-delay:1.3s; }
+
+  @keyframes ring-pulse{
+    0%{ transform:translate(-50%,-50%) scale(0.25); opacity:0.85; }
+    75%{ opacity:0.15; }
+    100%{ transform:translate(-50%,-50%) scale(1.35); opacity:0; }
+  }
+
+  .tracker .dot{
+    position:absolute;
+    left:50%; top:50%;
+    width:9px; height:9px;
+    margin:-4.5px 0 0 -4.5px;
+    border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 10px 2px rgba(77,169,255,0.9);
+    animation: dot-beat 1.4s ease-in-out infinite;
+  }
+
+  @keyframes dot-beat{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.5); }
+  }
+
+  /* ambient twinkling blue dots */
+  .spark{
+    position:absolute;
+    border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 6px 1px rgba(77,169,255,0.8);
+    z-index:1;
+    animation-name: twinkle;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:0.15; transform:scale(0.7); }
+    50%{ opacity:1; transform:scale(1.3); }
+  }
+
+  /* falling / rising particles */
+  .pin{
+    position:absolute;
+    bottom:-40px;
+    font-size:20px;
+    opacity:0;
+    pointer-events:none;
+    z-index:1;
+    animation-name: rise;
+    animation-timing-function: linear;
+  }
+  @keyframes rise{
+    0%{ transform:translateY(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.75; }
+    90%{ opacity:0.45; }
+    100%{ transform:translateY(-115vh) rotate(30deg); opacity:0; }
+  }
+
+  /* headline */
+  .headline-wrap{
+    position:relative;
+    z-index:3;
+    animation: wiggle 3.2s ease-in-out infinite;
+  }
+  @keyframes wiggle{
+    0%,100%{ transform:rotate(0deg); }
+    25%{ transform:rotate(-1.1deg); }
+    75%{ transform:rotate(1.1deg); }
+  }
+
+  .headline{
+    max-width:920px;
+    padding:0 28px;
     text-align:center;
+    font-family:'Fredoka', system-ui, sans-serif;
+    font-weight:700;
+    font-size:clamp(2.5rem, 9vw, 5.8rem);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    filter: drop-shadow(0 0 22px rgba(77,169,255,0.35));
+  }
+
+  .headline .word{
+    display:inline-block;
+    margin:0 0.14em;
+    opacity:0;
+    transform:translateY(28px) scale(0.85) rotate(-3deg);
+    background:linear-gradient(90deg, var(--glow1), var(--glow2), var(--glow3), var(--glow4), var(--green), var(--glow1));
+    background-size:400% 100%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation-name: pop-in, shimmer;
+    animation-duration: 0.65s, 5s;
+    animation-timing-function: cubic-bezier(.2,1.6,.4,1), linear;
+    animation-iteration-count: 1, infinite;
+    animation-fill-mode: forwards, none;
+  }
+
+  @keyframes pop-in{ to{ opacity:1; transform:translateY(0) scale(1) rotate(0deg); } }
+  @keyframes shimmer{ to{ background-position: -400% 0; } }
+
+  .sub{
+    position:relative;
+    z-index:3;
+    text-align:center;
+    margin-top:22px;
+    font-family:'Fredoka', system-ui, sans-serif;
+    font-weight:500;
+    font-size:clamp(0.95rem, 2vw, 1.15rem);
+    color:#8f9bb3;
+    opacity:0;
+    animation: fade-up 0.7s ease forwards;
+    animation-delay:1.4s;
+  }
+  @keyframes fade-up{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+
+  .hint{
+    position:absolute;
+    bottom:18px; left:0; right:0;
+    text-align:center;
+    font-family:'Fredoka', system-ui, sans-serif;
     font-size:11.5px;
-    color:var(--text-faint);
-    margin:12px 0 0;
-    letter-spacing:0.2px;
+    color:#3c3c4e;
+    z-index:3;
+  }
+
+  .burst-emoji{
+    position:fixed;
+    font-size:20px;
+    pointer-events:none;
+    z-index:6;
+    animation: burst 1s ease-out forwards;
+  }
+  @keyframes burst{
+    0%{ opacity:1; transform:translate(0,0) scale(0.6) rotate(0deg); }
+    100%{ opacity:0; transform:var(--end) scale(1.1) rotate(var(--rot)); }
   }
 
   @media (prefers-reduced-motion: reduce){
-    .ping.go{ animation:none; opacity:0; }
+    .blob, .headline-wrap, .tracker .ring, .tracker .dot, .spark, .pin{ animation:none !important; }
+    .tracker .ring{ opacity:0.3; transform:translate(-50%,-50%) scale(1); }
+    .spark{ opacity:0.6; }
+    .headline .word{ opacity:1; background-size:100% 100%; }
   }
 </style>
 </head>
-<body>
+<body id="body">
 
-<div class="frame">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
 
-  <div class="topbar">
-    <h1 class="display">Find My</h1>
-    <div class="dots"><span></span><span></span><span></span></div>
+  <div id="trackers"></div>
+  <div id="sparks"></div>
+  <div id="pins"></div>
+
+  <div class="headline-wrap">
+    <h1 class="headline" id="headline"></h1>
+    <p class="sub">no cap. no rush. just send it 📍</p>
   </div>
 
-  <div class="link-zone">
-    <div class="pair">
-      <div class="person">
-        <div class="avatar you">M</div>
-        <div class="label">You</div>
-      </div>
-      <div class="track"><div class="ping" id="ping"></div></div>
-      <div class="person">
-        <div class="avatar jp">JB</div>
-        <div class="label">JP Barnhart</div>
-      </div>
-    </div>
-
-    <div class="status-block">
-      <p class="headline" id="headline">JP hasn't shared his location with you.</p>
-      <p class="sub" id="subline">Send a request and hope for the best.</p>
-    </div>
-  </div>
-
-  <div class="sheet">
-    <div class="bubble" id="bubble">Hey, mind sharing your location for a sec?</div>
-    <button class="ask" id="askBtn">Ask to Share Location</button>
-    <p class="counter" id="counter">Requests sent: 0</p>
-  </div>
-
-</div>
+  <p class="hint">tap anywhere</p>
 
 <script>
-  const messages = [
-    "Hey, mind sharing your location for a sec?",
-    "Just following up on that location share.",
-    "Still hasn't come through, no rush though.",
-    "This is now request number 4, for the record.",
-    "JP.",
-    "JP please.",
-    "I will keep doing this.",
-    "Okay now I'm invested.",
-    "This is a bit, at this point.",
-    "One tap. That's all it takes."
-  ];
-
-  const headlines = [
-    "Request sent.",
-    "Still waiting on JP.",
-    "No response yet.",
-    "Sent again, for good measure.",
-    "JP has seen this. Probably."
-  ];
-
-  const bubble = document.getElementById('bubble');
+  const text = "bro jp plz can i have your location";
   const headline = document.getElementById('headline');
-  const subline = document.getElementById('subline');
-  const counter = document.getElementById('counter');
-  const ping = document.getElementById('ping');
-  const btn = document.getElementById('askBtn');
+  text.split(' ').forEach((w, i) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = w;
+    span.style.animationDelay = (i * 0.08) + 's, ' + (i * 0.08 + 0.6) + 's';
+    headline.appendChild(span);
+    headline.appendChild(document.createTextNode(' '));
+  });
 
-  let count = 0;
+  // radar trackers scattered around
+  const trackerContainer = document.getElementById('trackers');
+  const trackerSpots = [
+    [8,14],[88,10],[14,80],[85,78],[50,6],[6,48],[94,46],[30,90],[70,20],[46,88]
+  ];
+  trackerSpots.forEach(([left, top], i) => {
+    const size = 70 + Math.random() * 90;
+    const t = document.createElement('div');
+    t.className = 'tracker';
+    t.style.left = left + 'vw';
+    t.style.top = top + 'vh';
+    t.style.width = size + 'px';
+    t.style.height = size + 'px';
+    t.innerHTML = `
+      <div class="ring r1" style="width:${size}px;height:${size}px;"></div>
+      <div class="ring r2" style="width:${size}px;height:${size}px;"></div>
+      <div class="ring r3" style="width:${size}px;height:${size}px;"></div>
+      <div class="dot"></div>
+    `;
+    t.style.animationDelay = (Math.random() * 1.5) + 's';
+    trackerContainer.appendChild(t);
+  });
 
-  btn.addEventListener('click', () => {
-    count++;
-    btn.disabled = true;
+  // twinkling ambient blue dots
+  const sparkContainer = document.getElementById('sparks');
+  for (let i = 0; i < 28; i++) {
+    const s = document.createElement('span');
+    s.className = 'spark';
+    const size = 2 + Math.random() * 3.5;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = (Math.random() * 100) + 'vw';
+    s.style.top = (Math.random() * 100) + 'vh';
+    s.style.animationDuration = (1.4 + Math.random() * 2.2) + 's';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    sparkContainer.appendChild(s);
+  }
 
-    ping.classList.remove('go');
-    void ping.offsetWidth;
-    ping.classList.add('go');
+  // continuously spawning rising particles
+  const pinContainer = document.getElementById('pins');
+  const emojis = ['📍', '🙏', '😭', '📌', '💫', '❗'];
+  function spawnPin(){
+    const p = document.createElement('span');
+    p.className = 'pin';
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.fontSize = (14 + Math.random() * 20) + 'px';
+    const duration = 10 + Math.random() * 10;
+    p.style.animationDuration = duration + 's';
+    pinContainer.appendChild(p);
+    setTimeout(() => p.remove(), duration * 1000 + 200);
+  }
+  for (let i = 0; i < 14; i++) {
+    setTimeout(spawnPin, Math.random() * 4000);
+  }
+  setInterval(spawnPin, 550);
 
-    setTimeout(() => {
-      const msgIndex = Math.min(count - 1, messages.length - 1);
-      bubble.style.opacity = '0';
-      headline.style.opacity = '0';
-      setTimeout(() => {
-        bubble.textContent = messages[msgIndex];
-        headline.textContent = headlines[Math.min(count - 1, headlines.length - 1)];
-        subline.textContent = count === 1 ? "Sent just now." : "Sent " + count + " times now.";
-        counter.textContent = "Requests sent: " + count;
-        bubble.style.opacity = '1';
-        headline.style.opacity = '1';
-        btn.disabled = false;
-      }, 180);
-    }, 500);
+  // click burst
+  document.getElementById('body').addEventListener('click', (e) => {
+    const burstEmojis = ['📍', '🙏', '😭', '📌', '💥', '✨'];
+    for (let i = 0; i < 12; i++) {
+      const el = document.createElement('span');
+      el.className = 'burst-emoji';
+      el.textContent = burstEmojis[Math.floor(Math.random() * burstEmojis.length)];
+      el.style.left = e.clientX + 'px';
+      el.style.top = e.clientY + 'px';
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 70 + Math.random() * 110;
+      el.style.setProperty('--end', `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`);
+      el.style.setProperty('--rot', (Math.random() * 220 - 110) + 'deg');
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1000);
+    }
   });
 </script>
 

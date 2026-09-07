@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>bro jp plz</title>
+<title>bro plz jp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
@@ -134,6 +134,10 @@
     position:relative;
     z-index:3;
     animation: wiggle 3.2s ease-in-out infinite;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
   }
   @keyframes wiggle{
     0%,100%{ transform:rotate(0deg); }
@@ -147,11 +151,12 @@
     text-align:center;
     font-family:'Fredoka', system-ui, sans-serif;
     font-weight:700;
-    font-size:clamp(2.5rem, 9vw, 5.8rem);
-    line-height:1.08;
+    line-height:1.1;
     letter-spacing:-0.01em;
     filter: drop-shadow(0 0 22px rgba(77,169,255,0.35));
   }
+  .headline.big{ font-size:clamp(2.3rem, 8.4vw, 5.4rem); }
+  .headline.mid{ font-size:clamp(1.3rem, 4.6vw, 2.6rem); }
 
   .headline .word{
     display:inline-block;
@@ -172,21 +177,6 @@
 
   @keyframes pop-in{ to{ opacity:1; transform:translateY(0) scale(1) rotate(0deg); } }
   @keyframes shimmer{ to{ background-position: -400% 0; } }
-
-  .sub{
-    position:relative;
-    z-index:3;
-    text-align:center;
-    margin-top:22px;
-    font-family:'Fredoka', system-ui, sans-serif;
-    font-weight:500;
-    font-size:clamp(0.95rem, 2vw, 1.15rem);
-    color:#8f9bb3;
-    opacity:0;
-    animation: fade-up 0.7s ease forwards;
-    animation-delay:1.4s;
-  }
-  @keyframes fade-up{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
 
   .hint{
     position:absolute;
@@ -230,23 +220,27 @@
   <div id="pins"></div>
 
   <div class="headline-wrap">
-    <h1 class="headline" id="headline"></h1>
-    <p class="sub">no cap. no rush. just send it 📍</p>
+    <h1 class="headline big" id="headline1"></h1>
+    <h2 class="headline mid" id="headline2"></h2>
   </div>
 
   <p class="hint">tap anywhere</p>
 
 <script>
-  const text = "bro jp plz can i have your location";
-  const headline = document.getElementById('headline');
-  text.split(' ').forEach((w, i) => {
-    const span = document.createElement('span');
-    span.className = 'word';
-    span.textContent = w;
-    span.style.animationDelay = (i * 0.08) + 's, ' + (i * 0.08 + 0.6) + 's';
-    headline.appendChild(span);
-    headline.appendChild(document.createTextNode(' '));
-  });
+  function buildWords(elId, text, baseDelay){
+    const el = document.getElementById(elId);
+    text.split(' ').forEach((w, i) => {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = w;
+      const d = baseDelay + i * 0.08;
+      span.style.animationDelay = d + 's, ' + (d + 0.6) + 's';
+      el.appendChild(span);
+      el.appendChild(document.createTextNode(' '));
+    });
+  }
+  buildWords('headline1', 'bro plz jp can i get your loke', 0);
+  buildWords('headline2', 'btw how was spiderman brand new day?', 0.9);
 
   // radar trackers scattered around
   const trackerContainer = document.getElementById('trackers');

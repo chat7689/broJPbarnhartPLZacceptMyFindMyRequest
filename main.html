@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Find My — JP Barnhart</title>
+<title>Find My — Ask JP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,6 @@
     --sheet:#141b28;
     --line:#232c3d;
     --green:#30d98a;
-    --green-dim:#1c6a4a;
     --blue:#5b8cff;
     --text:#f2f5f9;
     --text-dim:#93a0b4;
@@ -40,9 +39,7 @@
     padding:24px;
   }
 
-  .display{
-    font-family:'Space Grotesk', 'Inter', system-ui, sans-serif;
-  }
+  .display{ font-family:'Space Grotesk', 'Inter', system-ui, sans-serif; }
 
   /* ---------- phone frame ---------- */
 
@@ -63,142 +60,115 @@
     flex-direction:column;
   }
 
-  /* ---------- top bar ---------- */
-
   .topbar{
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:22px 22px 14px;
     flex-shrink:0;
-    z-index:5;
   }
 
-  .topbar h1{
-    font-size:19px;
-    font-weight:600;
-    margin:0;
-    letter-spacing:0.2px;
-  }
+  .topbar h1{ font-size:19px; font-weight:600; margin:0; letter-spacing:0.2px; }
 
   .dots{
-    display:flex;
-    gap:4px;
-    padding:8px;
+    display:flex; gap:4px; padding:8px;
     border-radius:10px;
     background:rgba(255,255,255,0.04);
     border:1px solid var(--line);
   }
-  .dots span{
-    width:3px; height:3px;
-    border-radius:50%;
-    background:var(--text-dim);
-    display:block;
-  }
+  .dots span{ width:3px; height:3px; border-radius:50%; background:var(--text-dim); display:block; }
 
-  /* ---------- radar / map area ---------- */
+  /* ---------- connection zone ---------- */
 
-  .mapzone{
+  .link-zone{
     position:relative;
     flex:1;
     min-height:0;
-    background:
-      radial-gradient(circle at 50% 42%, #131c2c 0%, #0c1119 60%, #080b12 100%);
-    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:26px;
+    padding:0 30px;
   }
 
-  .grid{
-    position:absolute; inset:0;
-    background-image:
-      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
-    background-size: 28px 28px;
-    mask-image: radial-gradient(circle at 50% 42%, black 0%, black 55%, transparent 78%);
+  .pair{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    gap:0;
   }
 
-  .rings{
-    position:absolute;
-    left:50%; top:42%;
-    width:0; height:0;
+  .person{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    z-index:2;
+    width:96px;
   }
-  .ring{
-    position:absolute;
-    border:1px solid rgba(91,140,255,0.16);
+
+  .avatar{
+    width:64px; height:64px;
     border-radius:50%;
-    transform:translate(-50%,-50%);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:19px;
+    border:1px solid var(--line);
   }
-  .ring.r1{ width:120px; height:120px; }
-  .ring.r2{ width:230px; height:230px; }
-  .ring.r3{ width:340px; height:340px; border-color:rgba(91,140,255,0.09); }
+  .avatar.you{ background:linear-gradient(155deg, #2a3a55, #141a26); color:var(--text); }
+  .avatar.jp{ background:linear-gradient(155deg, #3a4b6b, #1b2434); color:var(--text); }
 
-  .sweep{
+  .person .label{ font-size:12.5px; color:var(--text-dim); text-align:center; }
+
+  .track{
+    position:relative;
+    flex:1;
+    height:2px;
+    margin:0 -6px;
+    top:-24px;
+    background-image: linear-gradient(to right, var(--line) 0 6px, transparent 6px 12px);
+    background-size:12px 2px;
+    background-repeat:repeat-x;
+  }
+
+  .ping{
     position:absolute;
-    left:50%; top:42%;
-    width:340px; height:340px;
-    transform:translate(-50%,-50%);
+    top:50%; left:0;
+    width:9px; height:9px;
+    margin-top:-4.5px;
     border-radius:50%;
-    background: conic-gradient(from 0deg, rgba(91,140,255,0.35), rgba(91,140,255,0) 28%);
-    animation: spin 3.4s linear infinite;
-    opacity:0.9;
-  }
-
-  @keyframes spin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
-
-  .marker{
-    position:absolute;
-    left:50%; top:42%;
-    transform:translate(-50%,-50%);
-    width:16px; height:16px;
-    z-index:3;
-  }
-  .marker .core{
-    position:absolute; inset:0;
     background:var(--green);
-    border-radius:50%;
-    box-shadow:0 0 0 4px rgba(48,217,138,0.18), 0 0 18px rgba(48,217,138,0.55);
-    opacity:0;
-    transform:scale(0.4);
-    transition: opacity .5s ease, transform .5s cubic-bezier(.2,1.4,.4,1);
-  }
-  .marker .pulse{
-    position:absolute;
-    left:50%; top:50%;
-    width:16px; height:16px;
-    margin:-8px 0 0 -8px;
-    border-radius:50%;
-    background:rgba(48,217,138,0.5);
+    box-shadow:0 0 10px rgba(48,217,138,0.7);
     opacity:0;
   }
-  .found .marker .core{ opacity:1; transform:scale(1); }
-  .found .marker .pulse{ animation: pulse-out 2.2s ease-out infinite; }
+  .ping.go{ animation: travel 0.85s ease-in-out; }
 
-  @keyframes pulse-out{
-    0%{ opacity:0.55; transform:scale(1); }
-    100%{ opacity:0; transform:scale(6.5); }
+  @keyframes travel{
+    0%{ opacity:0; left:0; transform:scale(0.6); }
+    12%{ opacity:1; transform:scale(1); }
+    88%{ opacity:1; }
+    100%{ opacity:0; left:100%; transform:scale(0.6) translateX(-100%); }
   }
 
-  .status-line{
-    position:absolute;
-    left:0; right:0; top:18px;
+  .status-block{
     text-align:center;
-    font-size:13px;
-    color:var(--text-dim);
-    letter-spacing:0.2px;
-    z-index:4;
-    transition:opacity .3s ease;
+    max-width:300px;
   }
-  .status-line .dotter::after{
-    content:'';
-    animation: dotter 1.2s steps(4,end) infinite;
+  .status-block .headline{
+    font-size:15.5px;
+    font-weight:500;
+    margin:0 0 6px;
+    transition:opacity .2s ease;
   }
-  @keyframes dotter{
-    0%{ content:''; }
-    25%{ content:'.'; }
-    50%{ content:'..'; }
-    75%{ content:'...'; }
-    100%{ content:''; }
+  .status-block .sub{
+    font-size:12.5px;
+    color:var(--text-faint);
+    margin:0;
   }
-  .found .status-line{ opacity:0; pointer-events:none; }
 
   /* ---------- bottom sheet ---------- */
 
@@ -207,81 +177,22 @@
     background:var(--sheet);
     border-top:1px solid var(--line);
     border-radius:26px 26px 0 0;
-    margin-top:-26px;
-    position:relative;
-    z-index:6;
-    padding:14px 22px 22px;
-    transform:translateY(72%);
-    transition: transform .65s cubic-bezier(.16,.9,.3,1);
-  }
-  .found .sheet{ transform:translateY(0); }
-
-  .handle{
-    width:36px; height:4px;
-    background:var(--line);
-    border-radius:4px;
-    margin:0 auto 16px;
+    padding:20px 22px 24px;
   }
 
-  .who{
-    display:flex;
-    align-items:center;
-    gap:14px;
-  }
-
-  .avatar{
-    width:52px; height:52px;
-    border-radius:50%;
-    flex-shrink:0;
-    background:linear-gradient(155deg, #3a4b6b, #1b2434);
-    border:1px solid var(--line);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    font-size:16px;
-    color:var(--text);
-  }
-
-  .who-text{ min-width:0; }
-  .who-text h2{
-    margin:0 0 3px;
-    font-size:18px;
-    font-weight:600;
-    font-family:'Space Grotesk', sans-serif;
-  }
-  .who-text p{
-    margin:0;
-    font-size:13.5px;
-    color:var(--text-dim);
-    line-height:1.35;
-  }
-
-  .meta-row{
-    display:flex;
-    gap:18px;
-    margin:18px 0 20px;
-    padding:14px 0;
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-  }
-  .meta{
-    flex:1;
-  }
-  .meta .k{
-    font-size:11px;
-    color:var(--text-faint);
-    margin:0 0 4px;
-  }
-  .meta .v{
+  .bubble{
+    background:rgba(91,140,255,0.1);
+    border:1px solid rgba(91,140,255,0.22);
+    border-radius:16px 16px 16px 4px;
+    padding:12px 14px;
     font-size:14px;
-    font-weight:500;
-    margin:0;
+    line-height:1.4;
+    margin-bottom:16px;
+    min-height:20px;
+    transition:opacity .18s ease;
   }
-  .meta .v.green{ color:var(--green); }
 
-  button.locate{
+  button.ask{
     width:100%;
     padding:14px;
     border-radius:14px;
@@ -294,138 +205,112 @@
     cursor:pointer;
     transition: transform .15s ease, background .2s ease;
   }
-  button.locate:active{ transform:scale(0.97); }
-  button.locate:hover{ background:#3fe89a; }
+  button.ask:active{ transform:scale(0.97); }
+  button.ask:hover{ background:#3fe89a; }
 
-  .fineprint{
+  .counter{
     text-align:center;
-    font-size:10.5px;
+    font-size:11.5px;
     color:var(--text-faint);
-    margin:14px 0 0;
+    margin:12px 0 0;
     letter-spacing:0.2px;
   }
 
   @media (prefers-reduced-motion: reduce){
-    .sweep{ animation:none; opacity:0.25; }
-    .marker .pulse{ animation:none; }
-    .status-line .dotter::after{ animation:none; content:'…'; }
-    .sheet{ transition:none; }
+    .ping.go{ animation:none; opacity:0; }
   }
 </style>
 </head>
 <body>
 
-<div class="frame" id="frame">
+<div class="frame">
 
   <div class="topbar">
     <h1 class="display">Find My</h1>
     <div class="dots"><span></span><span></span><span></span></div>
   </div>
 
-  <div class="mapzone">
-    <div class="grid"></div>
-    <div class="sweep"></div>
-    <div class="rings">
-      <div class="ring r1"></div>
-      <div class="ring r2"></div>
-      <div class="ring r3"></div>
+  <div class="link-zone">
+    <div class="pair">
+      <div class="person">
+        <div class="avatar you">M</div>
+        <div class="label">You</div>
+      </div>
+      <div class="track"><div class="ping" id="ping"></div></div>
+      <div class="person">
+        <div class="avatar jp">JB</div>
+        <div class="label">JP Barnhart</div>
+      </div>
     </div>
-    <div class="marker">
-      <div class="pulse"></div>
-      <div class="core"></div>
+
+    <div class="status-block">
+      <p class="headline" id="headline">JP hasn't shared his location with you.</p>
+      <p class="sub" id="subline">Send a request and hope for the best.</p>
     </div>
-    <div class="status-line" id="statusLine">Connecting to satellites<span class="dotter"></span></div>
   </div>
 
   <div class="sheet">
-    <div class="handle"></div>
-    <div class="who">
-      <div class="avatar">JB</div>
-      <div class="who-text">
-        <h2 class="display">JP Barnhart</h2>
-        <p id="statusText">—</p>
-      </div>
-    </div>
-
-    <div class="meta-row">
-      <div class="meta">
-        <p class="k">LOCATED</p>
-        <p class="v" id="whenText">—</p>
-      </div>
-      <div class="meta">
-        <p class="k">CONFIDENCE</p>
-        <p class="v green" id="confText">—%</p>
-      </div>
-      <div class="meta">
-        <p class="k">VIBE</p>
-        <p class="v" id="vibeText">—</p>
-      </div>
-    </div>
-
-    <button class="locate" id="locateBtn">Locate Again</button>
-    <p class="fineprint">purely for entertainment · no real location data involved</p>
+    <div class="bubble" id="bubble">Hey, mind sharing your location for a sec?</div>
+    <button class="ask" id="askBtn">Ask to Share Location</button>
+    <p class="counter" id="counter">Requests sent: 0</p>
   </div>
 
 </div>
 
 <script>
-  const statuses = [
-    "Somewhere between the fridge and the couch",
-    "Last seen negotiating with a vending machine",
-    "In a tab-out war with 47 browser tabs",
-    "Circling the parking lot, still looking for a spot",
-    "Deep in a Wikipedia rabbit hole",
-    "Suspiciously close to a Chipotle",
-    "Allegedly \"on his way\"",
-    "Standing very still, hoping not to be noticed",
-    "Recalculating life choices",
-    "In line for coffee, again",
-    "Somewhere he swears he'll explain later",
-    "Orbiting the snack aisle",
-    "Definitely not avoiding your texts",
-    "Last known position: the couch, gravitationally bound"
+  const messages = [
+    "Hey, mind sharing your location for a sec?",
+    "Just following up on that location share.",
+    "Still hasn't come through, no rush though.",
+    "This is now request number 4, for the record.",
+    "JP.",
+    "JP please.",
+    "I will keep doing this.",
+    "Okay now I'm invested.",
+    "This is a bit, at this point.",
+    "One tap. That's all it takes."
   ];
 
-  const vibes = ["Chill", "Chaotic", "Focused", "Snacking", "Wandering", "Suspicious", "Thriving", "Lost"];
+  const headlines = [
+    "Request sent.",
+    "Still waiting on JP.",
+    "No response yet.",
+    "Sent again, for good measure.",
+    "JP has seen this. Probably."
+  ];
 
-  const frame = document.getElementById('frame');
-  const statusLine = document.getElementById('statusLine');
-  const statusText = document.getElementById('statusText');
-  const whenText = document.getElementById('whenText');
-  const confText = document.getElementById('confText');
-  const vibeText = document.getElementById('vibeText');
-  const btn = document.getElementById('locateBtn');
+  const bubble = document.getElementById('bubble');
+  const headline = document.getElementById('headline');
+  const subline = document.getElementById('subline');
+  const counter = document.getElementById('counter');
+  const ping = document.getElementById('ping');
+  const btn = document.getElementById('askBtn');
 
-  let lastIndex = -1;
-  function pick(arr, avoid){
-    let i;
-    do { i = Math.floor(Math.random() * arr.length); } while (arr.length > 1 && i === avoid);
-    return i;
-  }
+  let count = 0;
 
-  function reveal(){
-    const i = pick(statuses, lastIndex);
-    lastIndex = i;
-    statusText.textContent = statuses[i];
-    vibeText.textContent = vibes[Math.floor(Math.random() * vibes.length)];
-    confText.textContent = (62 + Math.floor(Math.random() * 37)) + '%';
-    whenText.textContent = 'Just now';
-    frame.classList.add('found');
-  }
-
-  function locate(sequenceMs){
-    frame.classList.remove('found');
-    statusLine.style.opacity = '1';
+  btn.addEventListener('click', () => {
+    count++;
     btn.disabled = true;
+
+    ping.classList.remove('go');
+    void ping.offsetWidth;
+    ping.classList.add('go');
+
     setTimeout(() => {
-      reveal();
-      btn.disabled = false;
-    }, sequenceMs);
-  }
-
-  btn.addEventListener('click', () => locate(1100));
-
-  window.addEventListener('load', () => locate(1900));
+      const msgIndex = Math.min(count - 1, messages.length - 1);
+      bubble.style.opacity = '0';
+      headline.style.opacity = '0';
+      setTimeout(() => {
+        bubble.textContent = messages[msgIndex];
+        headline.textContent = headlines[Math.min(count - 1, headlines.length - 1)];
+        subline.textContent = count === 1 ? "Sent just now." : "Sent " + count + " times now.";
+        counter.textContent = "Requests sent: " + count;
+        bubble.style.opacity = '1';
+        headline.style.opacity = '1';
+        btn.disabled = false;
+      }, 180);
+    }, 500);
+  });
 </script>
 
 </body>

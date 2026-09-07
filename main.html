@@ -1,1 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find My — JP Barnhart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#080b12;
+    --panel:#10151f;
+    --sheet:#141b28;
+    --line:#232c3d;
+    --green:#30d98a;
+    --green-dim:#1c6a4a;
+    --blue:#5b8cff;
+    --text:#f2f5f9;
+    --text-dim:#93a0b4;
+    --text-faint:#4c5769;
+  }
 
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    height:100%;
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Inter', system-ui, -apple-system, sans-serif;
+    overflow:hidden;
+  }
+
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+  }
+
+  .display{
+    font-family:'Space Grotesk', 'Inter', system-ui, sans-serif;
+  }
+
+  /* ---------- phone frame ---------- */
+
+  .frame{
+    position:relative;
+    width:390px;
+    max-width:100%;
+    height:780px;
+    max-height:92vh;
+    background:var(--panel);
+    border-radius:44px;
+    border:1px solid var(--line);
+    box-shadow:
+      0 40px 80px -30px rgba(0,0,0,0.7),
+      0 0 0 8px rgba(255,255,255,0.02) inset;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ---------- top bar ---------- */
+
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 22px 14px;
+    flex-shrink:0;
+    z-index:5;
+  }
+
+  .topbar h1{
+    font-size:19px;
+    font-weight:600;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+
+  .dots{
+    display:flex;
+    gap:4px;
+    padding:8px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line);
+  }
+  .dots span{
+    width:3px; height:3px;
+    border-radius:50%;
+    background:var(--text-dim);
+    display:block;
+  }
+
+  /* ---------- radar / map area ---------- */
+
+  .mapzone{
+    position:relative;
+    flex:1;
+    min-height:0;
+    background:
+      radial-gradient(circle at 50% 42%, #131c2c 0%, #0c1119 60%, #080b12 100%);
+    overflow:hidden;
+  }
+
+  .grid{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(circle at 50% 42%, black 0%, black 55%, transparent 78%);
+  }
+
+  .rings{
+    position:absolute;
+    left:50%; top:42%;
+    width:0; height:0;
+  }
+  .ring{
+    position:absolute;
+    border:1px solid rgba(91,140,255,0.16);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+  }
+  .ring.r1{ width:120px; height:120px; }
+  .ring.r2{ width:230px; height:230px; }
+  .ring.r3{ width:340px; height:340px; border-color:rgba(91,140,255,0.09); }
+
+  .sweep{
+    position:absolute;
+    left:50%; top:42%;
+    width:340px; height:340px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background: conic-gradient(from 0deg, rgba(91,140,255,0.35), rgba(91,140,255,0) 28%);
+    animation: spin 3.4s linear infinite;
+    opacity:0.9;
+  }
+
+  @keyframes spin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
+
+  .marker{
+    position:absolute;
+    left:50%; top:42%;
+    transform:translate(-50%,-50%);
+    width:16px; height:16px;
+    z-index:3;
+  }
+  .marker .core{
+    position:absolute; inset:0;
+    background:var(--green);
+    border-radius:50%;
+    box-shadow:0 0 0 4px rgba(48,217,138,0.18), 0 0 18px rgba(48,217,138,0.55);
+    opacity:0;
+    transform:scale(0.4);
+    transition: opacity .5s ease, transform .5s cubic-bezier(.2,1.4,.4,1);
+  }
+  .marker .pulse{
+    position:absolute;
+    left:50%; top:50%;
+    width:16px; height:16px;
+    margin:-8px 0 0 -8px;
+    border-radius:50%;
+    background:rgba(48,217,138,0.5);
+    opacity:0;
+  }
+  .found .marker .core{ opacity:1; transform:scale(1); }
+  .found .marker .pulse{ animation: pulse-out 2.2s ease-out infinite; }
+
+  @keyframes pulse-out{
+    0%{ opacity:0.55; transform:scale(1); }
+    100%{ opacity:0; transform:scale(6.5); }
+  }
+
+  .status-line{
+    position:absolute;
+    left:0; right:0; top:18px;
+    text-align:center;
+    font-size:13px;
+    color:var(--text-dim);
+    letter-spacing:0.2px;
+    z-index:4;
+    transition:opacity .3s ease;
+  }
+  .status-line .dotter::after{
+    content:'';
+    animation: dotter 1.2s steps(4,end) infinite;
+  }
+  @keyframes dotter{
+    0%{ content:''; }
+    25%{ content:'.'; }
+    50%{ content:'..'; }
+    75%{ content:'...'; }
+    100%{ content:''; }
+  }
+  .found .status-line{ opacity:0; pointer-events:none; }
+
+  /* ---------- bottom sheet ---------- */
+
+  .sheet{
+    flex-shrink:0;
+    background:var(--sheet);
+    border-top:1px solid var(--line);
+    border-radius:26px 26px 0 0;
+    margin-top:-26px;
+    position:relative;
+    z-index:6;
+    padding:14px 22px 22px;
+    transform:translateY(72%);
+    transition: transform .65s cubic-bezier(.16,.9,.3,1);
+  }
+  .found .sheet{ transform:translateY(0); }
+
+  .handle{
+    width:36px; height:4px;
+    background:var(--line);
+    border-radius:4px;
+    margin:0 auto 16px;
+  }
+
+  .who{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+
+  .avatar{
+    width:52px; height:52px;
+    border-radius:50%;
+    flex-shrink:0;
+    background:linear-gradient(155deg, #3a4b6b, #1b2434);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--text);
+  }
+
+  .who-text{ min-width:0; }
+  .who-text h2{
+    margin:0 0 3px;
+    font-size:18px;
+    font-weight:600;
+    font-family:'Space Grotesk', sans-serif;
+  }
+  .who-text p{
+    margin:0;
+    font-size:13.5px;
+    color:var(--text-dim);
+    line-height:1.35;
+  }
+
+  .meta-row{
+    display:flex;
+    gap:18px;
+    margin:18px 0 20px;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .meta{
+    flex:1;
+  }
+  .meta .k{
+    font-size:11px;
+    color:var(--text-faint);
+    margin:0 0 4px;
+  }
+  .meta .v{
+    font-size:14px;
+    font-weight:500;
+    margin:0;
+  }
+  .meta .v.green{ color:var(--green); }
+
+  button.locate{
+    width:100%;
+    padding:14px;
+    border-radius:14px;
+    border:none;
+    background:var(--green);
+    color:#06231a;
+    font-size:15px;
+    font-weight:600;
+    font-family:'Inter', sans-serif;
+    cursor:pointer;
+    transition: transform .15s ease, background .2s ease;
+  }
+  button.locate:active{ transform:scale(0.97); }
+  button.locate:hover{ background:#3fe89a; }
+
+  .fineprint{
+    text-align:center;
+    font-size:10.5px;
+    color:var(--text-faint);
+    margin:14px 0 0;
+    letter-spacing:0.2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .sweep{ animation:none; opacity:0.25; }
+    .marker .pulse{ animation:none; }
+    .status-line .dotter::after{ animation:none; content:'…'; }
+    .sheet{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="frame" id="frame">
+
+  <div class="topbar">
+    <h1 class="display">Find My</h1>
+    <div class="dots"><span></span><span></span><span></span></div>
+  </div>
+
+  <div class="mapzone">
+    <div class="grid"></div>
+    <div class="sweep"></div>
+    <div class="rings">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+    </div>
+    <div class="marker">
+      <div class="pulse"></div>
+      <div class="core"></div>
+    </div>
+    <div class="status-line" id="statusLine">Connecting to satellites<span class="dotter"></span></div>
+  </div>
+
+  <div class="sheet">
+    <div class="handle"></div>
+    <div class="who">
+      <div class="avatar">JB</div>
+      <div class="who-text">
+        <h2 class="display">JP Barnhart</h2>
+        <p id="statusText">—</p>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="meta">
+        <p class="k">LOCATED</p>
+        <p class="v" id="whenText">—</p>
+      </div>
+      <div class="meta">
+        <p class="k">CONFIDENCE</p>
+        <p class="v green" id="confText">—%</p>
+      </div>
+      <div class="meta">
+        <p class="k">VIBE</p>
+        <p class="v" id="vibeText">—</p>
+      </div>
+    </div>
+
+    <button class="locate" id="locateBtn">Locate Again</button>
+    <p class="fineprint">purely for entertainment · no real location data involved</p>
+  </div>
+
+</div>
+
+<script>
+  const statuses = [
+    "Somewhere between the fridge and the couch",
+    "Last seen negotiating with a vending machine",
+    "In a tab-out war with 47 browser tabs",
+    "Circling the parking lot, still looking for a spot",
+    "Deep in a Wikipedia rabbit hole",
+    "Suspiciously close to a Chipotle",
+    "Allegedly \"on his way\"",
+    "Standing very still, hoping not to be noticed",
+    "Recalculating life choices",
+    "In line for coffee, again",
+    "Somewhere he swears he'll explain later",
+    "Orbiting the snack aisle",
+    "Definitely not avoiding your texts",
+    "Last known position: the couch, gravitationally bound"
+  ];
+
+  const vibes = ["Chill", "Chaotic", "Focused", "Snacking", "Wandering", "Suspicious", "Thriving", "Lost"];
+
+  const frame = document.getElementById('frame');
+  const statusLine = document.getElementById('statusLine');
+  const statusText = document.getElementById('statusText');
+  const whenText = document.getElementById('whenText');
+  const confText = document.getElementById('confText');
+  const vibeText = document.getElementById('vibeText');
+  const btn = document.getElementById('locateBtn');
+
+  let lastIndex = -1;
+  function pick(arr, avoid){
+    let i;
+    do { i = Math.floor(Math.random() * arr.length); } while (arr.length > 1 && i === avoid);
+    return i;
+  }
+
+  function reveal(){
+    const i = pick(statuses, lastIndex);
+    lastIndex = i;
+    statusText.textContent = statuses[i];
+    vibeText.textContent = vibes[Math.floor(Math.random() * vibes.length)];
+    confText.textContent = (62 + Math.floor(Math.random() * 37)) + '%';
+    whenText.textContent = 'Just now';
+    frame.classList.add('found');
+  }
+
+  function locate(sequenceMs){
+    frame.classList.remove('found');
+    statusLine.style.opacity = '1';
+    btn.disabled = true;
+    setTimeout(() => {
+      reveal();
+      btn.disabled = false;
+    }, sequenceMs);
+  }
+
+  btn.addEventListener('click', () => locate(1100));
+
+  window.addEventListener('load', () => locate(1900));
+</script>
+
+</body>
+</html>

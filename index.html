@@ -3,588 +3,1378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IB Economics Unit 1: Foundations Study Suite</title>
+    <title>IB Economics Unit 1: Foundations & PPC Masterclass</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
                     colors: {
-                        brand: {
-                            50: '#f0f4ff',
-                            100: '#e0eaff',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        },
-                        accent: {
-                            500: '#10b981',
-                            600: '#059669',
-                        }
+                        paper: '#FBF9F5',
+                        'paper-dark': '#F4EFE6',
+                        'paper-card': '#FFFDF9',
+                        ink: '#1F2421',
+                        'ink-light': '#4A524D',
+                        terracotta: '#C85A32',
+                        'terracotta-soft': '#F5E8E2',
+                        olive: '#5A7052',
+                        'olive-soft': '#EBF0E9',
+                        slate: '#4A6B82',
+                        'slate-soft': '#E6EEF3',
+                        border: '#E2DACD',
+                        'border-strong': '#CFC4B2'
+                    },
+                    fontFamily: {
+                        serif: ['EB Garamond', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    boxShadow: {
+                        'paper': '2px 3px 0px rgba(31, 36, 33, 0.08), 0px 1px 2px rgba(0, 0, 0, 0.04)',
+                        'paper-hover': '4px 6px 0px rgba(31, 36, 33, 0.12), 0px 3px 6px rgba(0, 0, 0, 0.06)',
+                        'paper-sm': '1px 2px 0px rgba(31, 36, 33, 0.06)'
                     }
                 }
             }
         }
     </script>
     <style>
-        .perspective-1000 {
+        body {
+            background-color: #FBF9F5;
+            color: #1F2421;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(#E2DACD 0.75px, transparent 0.75px);
+            background-size: 24px 24px;
+        }
+
+        .serif-title {
+            font-family: 'EB Garamond', serif;
+        }
+
+        .notebook-line {
+            background-image: repeating-linear-gradient(transparent, transparent 31px, #E2DACD 31px, #E2DACD 32px);
+            line-height: 32px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F4EFE6;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #CFC4B2;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #A89B85;
+        }
+
+        .card-flip {
             perspective: 1000px;
         }
-        .transform-style-3d {
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             transform-style: preserve-3d;
         }
-        .backface-hidden {
-            backface-visibility: hidden;
-        }
-        .rotate-y-180 {
+        .card-flipped .card-inner {
             transform: rotateY(180deg);
         }
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
-        .glass-dark {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .tab-btn.active {
+            background-color: #1F2421;
+            color: #FBF9F5;
+            border-color: #1F2421;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+<body class="min-h-screen flex flex-col justify-between text-ink antialiased selection:bg-terracotta selection:text-white">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 glass border-b border-slate-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-blue-500/20">
-                    IB
+    <header class="sticky top-0 z-40 bg-paper/90 backdrop-blur-md border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-terracotta flex items-center justify-center text-paper font-serif font-bold text-xl shadow-paper-sm">
+                        IB
+                    </div>
+                    <div>
+                        <h1 class="serif-title font-bold text-xl sm:text-2xl text-ink leading-tight">Unit 1 Study Hub</h1>
+                        <p class="text-xs text-ink-light tracking-wide uppercase font-medium">Economic Foundations & PPC Trainer</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-bold text-slate-900 text-lg leading-tight">Econ Unit 1 Mastery</h1>
-                    <p class="text-xs text-slate-500 font-medium">Foundations & Vocabulary Suite</p>
+
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex items-center space-x-1 bg-paper-dark p-1.5 rounded-xl border border-border">
+                    <button onclick="switchTab('vocab')" id="tab-vocab" class="tab-btn active px-4 py-2 text-xs font-semibold rounded-lg transition-all">
+                        1. Dictionary & Flashcards
+                    </button>
+                    <button onclick="switchTab('ppc')" id="tab-ppc" class="tab-btn px-4 py-2 text-xs font-semibold rounded-lg transition-all text-ink-light hover:text-ink">
+                        2. 10-Pt PPC Masterclass
+                    </button>
+                    <button onclick="switchTab('drill')" id="tab-drill" class="tab-btn px-4 py-2 text-xs font-semibold rounded-lg transition-all text-ink-light hover:text-ink">
+                        3. Quick Drills
+                    </button>
+                    <button onclick="switchTab('exam')" id="tab-exam" class="tab-btn px-4 py-2 text-xs font-semibold rounded-lg transition-all text-ink-light hover:text-ink">
+                        4. 20-Pt MC Exam
+                    </button>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <select onchange="switchTab(this.value)" id="mobile-nav" class="bg-paper-dark border border-border text-ink font-semibold rounded-lg text-xs px-3 py-2">
+                        <option value="vocab">1. Dictionary & Flashcards</option>
+                        <option value="ppc">2. 10-Pt PPC Masterclass</option>
+                        <option value="drill">3. Quick Drills</option>
+                        <option value="exam">4. 20-Pt MC Exam</option>
+                    </select>
                 </div>
             </div>
-            <nav class="flex space-x-1 bg-slate-200/60 p-1 rounded-xl text-xs sm:text-sm font-semibold">
-                <button onclick="switchTab('flashcards')" id="tab-flashcards" class="px-3 sm:px-4 py-1.5 rounded-lg transition-all duration-200 bg-white text-blue-600 shadow-sm">Flashcards</button>
-                <button onclick="switchTab('glossary')" id="tab-glossary" class="px-3 sm:px-4 py-1.5 rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900">Glossary</button>
-                <button onclick="switchTab('ppc')" id="tab-ppc" class="px-3 sm:px-4 py-1.5 rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900">PPC Diagrams</button>
-                <button onclick="switchTab('quiz')" id="tab-quiz" class="px-3 sm:px-4 py-1.5 rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900">Practice Quiz</button>
-            </nav>
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
 
-        <!-- TAB 1: FLASHCARDS -->
-        <section id="view-flashcards" class="space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-2xl font-bold text-slate-900">Interactive Vocabulary Deck</h2>
-                    <p class="text-sm text-slate-500">Master core terminology required for the 20-point multiple choice section.</p>
+        <!-- ==================== TAB 1: VOCAB DICTIONARY & FLASHCARDS ==================== -->
+        <section id="section-vocab" class="space-y-8">
+            <!-- Header Banner -->
+            <div class="bg-paper-card border border-border rounded-2xl p-6 sm:p-8 shadow-paper relative overflow-hidden">
+                <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-terracotta/10 to-transparent pointer-events-none"></div>
+                <div class="max-w-3xl">
+                    <span class="inline-block px-3 py-1 bg-terracotta-soft text-terracotta text-xs font-bold uppercase tracking-wider rounded-md mb-3 border border-terracotta/20">
+                        Section 01 • Plain English Dictionary
+                    </span>
+                    <h2 class="serif-title text-3xl sm:text-4xl font-bold text-ink mb-3">Unit 1 Master Vocabulary</h2>
+                    <p class="text-ink-light text-sm sm:text-base leading-relaxed">
+                        Every single concept required by IB Economics, translated into plain intuitive English. Includes memory hooks, sub-topic categorizations, and real-world IB context.
+                    </p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <select id="card-filter" onchange="filterCards()" class="bg-white border border-slate-200 text-slate-700 text-xs sm:text-sm rounded-xl px-3 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm">
-                        <option value="all">All Categories</option>
-                        <option value="core">9 Key IB Concepts</option>
-                        <option value="fop">Factors of Production</option>
-                        <option value="systems">Economic Systems</option>
-                        <option value="methodology">Methodology & Thought</option>
-                    </select>
-                    <button onclick="resetCardStats()" class="text-xs text-slate-500 hover:text-slate-800 underline">Reset Progress</button>
+
+                <!-- Controls Bar -->
+                <div class="mt-8 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-80">
+                        <svg class="w-4 h-4 absolute left-3.5 top-1/2 transform -translate-y-1/2 text-ink-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <input type="text" id="vocab-search" oninput="filterVocab()" placeholder="Search any term or keyword..." class="w-full bg-paper border border-border rounded-xl pl-10 pr-4 py-2 text-xs font-medium focus:outline-none focus:border-terracotta transition-colors">
+                    </div>
+
+                    <!-- Filter Pill Selector -->
+                    <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 custom-scrollbar text-xs">
+                        <button onclick="filterCategory('all')" id="cat-all" class="cat-btn active px-3 py-1.5 rounded-lg border border-ink bg-ink text-paper font-semibold transition-all shrink-0">All Terms</button>
+                        <button onclick="filterCategory('concepts')" id="cat-concepts" class="cat-btn px-3 py-1.5 rounded-lg border border-border bg-paper-dark text-ink-light font-semibold hover:border-ink transition-all shrink-0">1.1 Core Concepts</button>
+                        <button onclick="filterCategory('fop')" id="cat-fop" class="cat-btn px-3 py-1.5 rounded-lg border border-border bg-paper-dark text-ink-light font-semibold hover:border-ink transition-all shrink-0">Factors of Prod.</button>
+                        <button onclick="filterCategory('systems')" id="cat-systems" class="cat-btn px-3 py-1.5 rounded-lg border border-border bg-paper-dark text-ink-light font-semibold hover:border-ink transition-all shrink-0">Economic Systems</button>
+                        <button onclick="filterCategory('methodology')" id="cat-methodology" class="cat-btn px-3 py-1.5 rounded-lg border border-border bg-paper-dark text-ink-light font-semibold hover:border-ink transition-all shrink-0">Methodology</button>
+                        <button onclick="filterCategory('history')" id="cat-history" class="cat-btn px-3 py-1.5 rounded-lg border border-border bg-paper-dark text-ink-light font-semibold hover:border-ink transition-all shrink-0">History of Thought</button>
+                    </div>
+
+                    <!-- View Switcher -->
+                    <div class="flex items-center gap-2 border border-border p-1 bg-paper-dark rounded-xl shrink-0">
+                        <button onclick="toggleVocabMode('dictionary')" id="mode-dict" class="px-3 py-1 text-xs font-bold rounded-lg bg-paper text-ink shadow-paper-sm">Dictionary</button>
+                        <button onclick="toggleVocabMode('flashcards')" id="mode-cards" class="px-3 py-1 text-xs font-bold rounded-lg text-ink-light hover:text-ink">Flashcard Mode</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Flashcard Display -->
-            <div class="flex flex-col items-center justify-center py-6">
-                <div class="w-full max-w-xl perspective-1000">
-                    <div id="flashcard" onclick="flipCard()" class="relative w-full h-80 rounded-2xl cursor-pointer transition-transform duration-500 transform-style-3d shadow-xl bg-white border border-slate-100">
-                        <!-- Front -->
-                        <div class="absolute inset-0 w-full h-full backface-hidden rounded-2xl p-8 flex flex-col justify-between items-center text-center bg-gradient-to-br from-white via-slate-50 to-blue-50/30">
-                            <div class="w-full flex justify-between items-center text-xs font-semibold uppercase tracking-wider text-blue-600">
-                                <span id="card-category">Category</span>
-                                <span id="card-index" class="bg-blue-50 px-2 py-1 rounded-md text-blue-700 border border-blue-100">1 / 25</span>
+            <!-- DICTIONARY VIEW -->
+            <div id="dictionary-view" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Javascript will inject vocab cards here -->
+            </div>
+
+            <!-- FLASHCARD VIEW (Hidden by default) -->
+            <div id="flashcard-view" class="hidden space-y-6">
+                <div class="max-w-xl mx-auto">
+                    <!-- Progress Bar -->
+                    <div class="flex items-center justify-between text-xs font-medium text-ink-light mb-2">
+                        <span id="card-index">Card 1 of 24</span>
+                        <span id="card-status-badge" class="px-2 py-0.5 bg-paper-dark border border-border rounded text-ink">Category</span>
+                    </div>
+                    <div class="w-full bg-paper-dark h-2 rounded-full overflow-hidden border border-border mb-6">
+                        <div id="flashcard-progress" class="bg-terracotta h-full w-0 transition-all duration-300"></div>
+                    </div>
+
+                    <!-- Flashcard Interactive Component -->
+                    <div id="flashcard" onclick="flipFlashcard()" class="card-flip h-80 cursor-pointer group">
+                        <div class="card-inner relative w-full h-full text-center">
+                            <!-- Card Front -->
+                            <div class="card-front absolute w-full h-full bg-paper-card border-2 border-border rounded-2xl p-8 flex flex-col justify-between items-center shadow-paper group-hover:border-terracotta/60 transition-colors">
+                                <span class="text-xs font-bold text-terracotta uppercase tracking-wider">Click anywhere to flip</span>
+                                <div class="my-auto">
+                                    <h3 id="card-front-title" class="serif-title text-3xl font-bold text-ink">Term Name</h3>
+                                    <p id="card-front-category" class="text-xs text-ink-light mt-2 font-medium">Category</p>
+                                </div>
+                                <span class="text-xs text-ink-light flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                    Tap to reveal definition & IB hook
+                                </span>
                             </div>
-                            <div class="my-auto">
-                                <h3 id="card-term" class="text-3xl font-extrabold text-slate-800 tracking-tight">Term</h3>
-                                <p class="text-xs text-slate-400 mt-2 font-medium">Click to flip definition</p>
-                            </div>
-                            <div class="w-full flex justify-center gap-1 text-slate-300">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+
+                            <!-- Card Back -->
+                            <div class="card-back absolute w-full h-full bg-paper-dark border-2 border-border rounded-2xl p-6 sm:p-8 flex flex-col justify-between text-left shadow-paper">
+                                <div>
+                                    <span class="text-xs font-bold text-olive uppercase tracking-wider">Plain English Definition</span>
+                                    <p id="card-back-def" class="text-ink font-medium text-sm sm:text-base mt-2 leading-relaxed">Definition goes here...</p>
+                                </div>
+                                <div class="bg-paper p-3 rounded-xl border border-border my-2">
+                                    <span class="text-xs font-bold text-terracotta uppercase block mb-1">🧠 Memory Hook</span>
+                                    <p id="card-back-hook" class="text-xs text-ink-light italic">Memory hook text...</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs text-ink-light pt-2 border-t border-border">
+                                    <span id="card-back-ex">Example: Singapore</span>
+                                    <span class="text-terracotta font-bold">Flip back</span>
+                                </div>
                             </div>
                         </div>
-                        <!-- Back -->
-                        <div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl p-8 flex flex-col justify-between items-center text-center bg-slate-900 text-white">
-                            <div class="w-full flex justify-between items-center text-xs font-semibold uppercase tracking-wider text-blue-400">
-                                <span>Definition & Context</span>
-                                <span id="card-category-back">Category</span>
+                    </div>
+
+                    <!-- Flashcard Navigation Controls -->
+                    <div class="flex items-center justify-between gap-4 mt-6">
+                        <button onclick="prevFlashcard()" class="flex-1 py-3 px-4 bg-paper-card border border-border rounded-xl font-bold text-xs text-ink shadow-paper-sm hover:border-ink transition-all flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                            Previous
+                        </button>
+                        <button onclick="markCardMastered()" class="py-3 px-4 bg-olive-soft border border-olive/30 text-olive rounded-xl font-bold text-xs hover:bg-olive hover:text-white transition-all flex items-center gap-1.5 shrink-0">
+                            ✓ Got It
+                        </button>
+                        <button onclick="nextFlashcard()" class="flex-1 py-3 px-4 bg-ink text-paper rounded-xl font-bold text-xs shadow-paper-sm hover:bg-black transition-all flex items-center justify-center gap-2">
+                            Next
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TAB 2: 10-PT PPC MASTERCLASS ==================== -->
+        <section id="section-ppc" class="hidden space-y-8">
+            <div class="bg-paper-card border border-border rounded-2xl p-6 sm:p-8 shadow-paper">
+                <div class="max-w-3xl">
+                    <span class="inline-block px-3 py-1 bg-olive-soft text-olive text-xs font-bold uppercase tracking-wider rounded-md mb-3 border border-olive/20">
+                        Section 02 • 10-Point Diagram Masterclass
+                    </span>
+                    <h2 class="serif-title text-3xl sm:text-4xl font-bold text-ink mb-3">PPC Scenario Trainer & Answer Scripts</h2>
+                    <p class="text-ink-light text-sm sm:text-base leading-relaxed">
+                        Master all 6 required PPC scenarios for the drawing/explanation section. Click any scenario below to view the interactive diagram, exact step-by-step drawing guidelines, and the 100% full-credit written script.
+                    </p>
+                </div>
+
+                <!-- Scenario Pills Switcher -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mt-8">
+                    <button onclick="loadPPCScenario(0)" id="ppc-btn-0" class="ppc-btn active p-3 rounded-xl border border-ink bg-ink text-paper text-left text-xs font-bold transition-all">
+                        1. Movement / Op. Cost
+                    </button>
+                    <button onclick="loadPPCScenario(1)" id="ppc-btn-1" class="ppc-btn p-3 rounded-xl border border-border bg-paper-dark text-ink text-left text-xs font-bold hover:border-ink transition-all">
+                        2. Inefficiency
+                    </button>
+                    <button onclick="loadPPCScenario(2)" id="ppc-btn-2" class="ppc-btn p-3 rounded-xl border border-border bg-paper-dark text-ink text-left text-xs font-bold hover:border-ink transition-all">
+                        3. Actual Growth
+                    </button>
+                    <button onclick="loadPPCScenario(3)" id="ppc-btn-3" class="ppc-btn p-3 rounded-xl border border-border bg-paper-dark text-ink text-left text-xs font-bold hover:border-ink transition-all">
+                        4. Potential Growth
+                    </button>
+                    <button onclick="loadPPCScenario(4)" id="ppc-btn-4" class="ppc-btn p-3 rounded-xl border border-border bg-paper-dark text-ink text-left text-xs font-bold hover:border-ink transition-all">
+                        5. Increasing Op. Cost
+                    </button>
+                    <button onclick="loadPPCScenario(5)" id="ppc-btn-5" class="ppc-btn p-3 rounded-xl border border-border bg-paper-dark text-ink text-left text-xs font-bold hover:border-ink transition-all">
+                        6. Constant Op. Cost
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Scenario Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- SVG Interactive Diagram Display (5 cols) -->
+                <div class="lg:col-span-5 bg-paper-card border border-border rounded-2xl p-6 shadow-paper flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4 border-b border-border pb-3">
+                            <h3 id="ppc-diagram-title" class="serif-title text-xl font-bold text-ink">Scenario Diagram</h3>
+                            <span id="ppc-tag" class="text-xs font-bold px-2.5 py-1 bg-terracotta-soft text-terracotta rounded-md border border-terracotta/20">Concave PPC</span>
+                        </div>
+                        <div id="ppc-svg-container" class="w-full aspect-square bg-paper border border-border rounded-xl p-4 flex items-center justify-center relative shadow-inner">
+                            <!-- SVG will be injected here dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-paper-dark rounded-xl border border-border text-xs text-ink-light flex items-start gap-2">
+                        <span class="text-terracotta font-bold text-base leading-none">💡</span>
+                        <p id="ppc-diagram-tip">Observe the curve shape and axis labels (Good A vs Good B).</p>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Drawing Guide & Answer Script (7 cols) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Step-by-Step Drawing Instructions -->
+                    <div class="bg-paper-card border border-border rounded-2xl p-6 shadow-paper">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="w-6 h-6 rounded-full bg-slate text-paper flex items-center justify-center text-xs font-bold">1</span>
+                            <h3 class="serif-title text-lg font-bold text-ink">What to Draw (Diagram Checklist)</h3>
+                        </div>
+                        <ul id="ppc-draw-steps" class="space-y-2 text-xs text-ink-light list-disc list-inside">
+                            <!-- Steps dynamically inserted -->
+                        </ul>
+                    </div>
+
+                    <!-- 100% Exam Script Notebook Card -->
+                    <div class="bg-paper-card border-2 border-terracotta/40 rounded-2xl p-6 shadow-paper relative">
+                        <div class="absolute -top-3 left-6 px-3 py-0.5 bg-terracotta text-paper text-xs font-bold rounded-full uppercase tracking-wider">
+                            ★ Exact 100% Written Answer Script
+                        </div>
+                        
+                        <div class="mt-2 text-sm space-y-4">
+                            <div>
+                                <h4 class="text-xs font-bold text-terracotta uppercase tracking-wider mb-1">Definitions to include:</h4>
+                                <p id="ppc-script-defs" class="font-serif italic text-ink bg-paper-dark p-3 rounded-lg border border-border text-xs leading-relaxed">
+                                    Definitions snippet...
+                                </p>
                             </div>
-                            <div class="my-auto overflow-y-auto max-h-48 px-2">
-                                <p id="card-definition" class="text-base sm:text-lg leading-relaxed text-slate-200">Definition goes here...</p>
+
+                            <div>
+                                <h4 class="text-xs font-bold text-ink uppercase tracking-wider mb-1">Full Written Explanation (Word-for-Word):</h4>
+                                <p id="ppc-script-explanation" class="text-ink leading-relaxed text-xs sm:text-sm bg-paper p-4 rounded-xl border border-border font-sans">
+                                    Written answer script...
+                                </p>
                             </div>
-                            <div id="card-example" class="text-xs text-blue-300 font-mono bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700/50 max-w-full truncate">
-                                Example / Key note
+
+                            <div class="bg-olive-soft/60 p-3 rounded-xl border border-olive/20 text-xs text-olive font-medium flex items-start gap-2">
+                                <span class="font-bold uppercase text-olive shrink-0">Pro-Tip for 10/10:</span>
+                                <p id="ppc-script-protip">Key tip to secure full points on this scenario.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Controls -->
-                <div class="flex items-center justify-center gap-4 mt-8 w-full max-w-xl">
-                    <button onclick="prevCard()" class="p-3 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold shadow-sm transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                    </button>
-                    <button onclick="markMastered()" id="master-btn" class="flex-1 py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold shadow-md shadow-emerald-500/20 transition flex items-center justify-center gap-2 text-sm">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Mark Mastered
-                    </button>
-                    <button onclick="nextCard()" class="p-3 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold shadow-sm transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                </div>
             </div>
         </section>
 
-        <!-- TAB 2: GLOSSARY -->
-        <section id="view-glossary" class="hidden space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-2xl font-bold text-slate-900">Complete IB Econ Unit 1 Glossary</h2>
-                    <p class="text-sm text-slate-500">Comprehensive list of all terms from your study guide syllabus.</p>
-                </div>
-                <div class="relative w-full md:w-72">
-                    <input type="text" id="glossary-search" oninput="renderGlossary()" placeholder="Search terms or definitions..." class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm pl-9">
-                    <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+
+        <!-- ==================== TAB 3: QUICK DRILLS ==================== -->
+        <section id="section-drill" class="hidden space-y-8">
+            <div class="bg-paper-card border border-border rounded-2xl p-6 sm:p-8 shadow-paper">
+                <div class="max-w-3xl">
+                    <span class="inline-block px-3 py-1 bg-slate-soft text-slate text-xs font-bold uppercase tracking-wider rounded-md mb-3 border border-slate/20">
+                        Section 03 • Speed Training
+                    </span>
+                    <h2 class="serif-title text-3xl sm:text-4xl font-bold text-ink mb-3">Positive vs. Normative Quick Drill</h2>
+                    <p class="text-ink-light text-sm sm:text-base leading-relaxed">
+                        IB examiners love testing statement classifications. Practice identifying testable factual statements (Positive) vs. value judgments / "should" statements (Normative).
+                    </p>
                 </div>
             </div>
 
-            <div id="glossary-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Dynamically Populated -->
+            <!-- Interactive Game Container -->
+            <div class="max-w-2xl mx-auto bg-paper-card border border-border rounded-2xl p-6 sm:p-8 shadow-paper text-center">
+                <div class="flex items-center justify-between text-xs font-bold text-ink-light mb-6 pb-4 border-b border-border">
+                    <span>Statement <span id="drill-current-num">1</span> of 8</span>
+                    <span id="drill-score" class="text-terracotta">Score: 0 / 0</span>
+                </div>
+
+                <div class="min-h-[140px] flex items-center justify-center p-6 bg-paper rounded-2xl border border-border mb-6">
+                    <p id="drill-statement-text" class="serif-title text-xl sm:text-2xl font-semibold text-ink leading-snug">
+                        "Increasing the minimum wage to $15 per hour will increase youth unemployment."
+                    </p>
+                </div>
+
+                <!-- Choice Buttons -->
+                <div id="drill-options" class="grid grid-cols-2 gap-4">
+                    <button onclick="submitDrillAnswer('positive')" class="py-4 px-6 bg-paper-dark border-2 border-slate text-slate rounded-xl font-bold text-sm hover:bg-slate hover:text-white transition-all shadow-paper-sm">
+                        📊 Positive Statement<br><span class="text-[10px] font-normal opacity-80">(Objective / Testable Fact)</span>
+                    </button>
+                    <button onclick="submitDrillAnswer('normative')" class="py-4 px-6 bg-paper-dark border-2 border-terracotta text-terracotta rounded-xl font-bold text-sm hover:bg-terracotta hover:text-white transition-all shadow-paper-sm">
+                        💭 Normative Statement<br><span class="text-[10px] font-normal opacity-80">(Opinion / Value Judgment)</span>
+                    </button>
+                </div>
+
+                <!-- Feedback Message Box -->
+                <div id="drill-feedback" class="hidden mt-6 p-4 rounded-xl border text-left text-xs sm:text-sm transition-all">
+                    <!-- Feedback injected dynamically -->
+                </div>
+
+                <button id="drill-next-btn" onclick="nextDrillStatement()" class="hidden mt-4 w-full py-3 bg-ink text-paper font-bold text-xs rounded-xl hover:bg-black transition-all">
+                    Next Statement →
+                </button>
             </div>
         </section>
 
-        <!-- TAB 3: PPC DIAGRAM EXPLORER -->
-        <section id="view-ppc" class="hidden space-y-6">
-            <div>
-                <h2 class="text-2xl font-bold text-slate-900">10-Point PPC Drawing & Concept Guide</h2>
-                <p class="text-sm text-slate-500">Interactive visualizations and key explanations needed for the diagram drawing portion of your test.</p>
-            </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Interactive Controls -->
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                    <h3 class="font-bold text-slate-800 text-lg">Select PPC Scenario</h3>
-                    <div class="space-y-2">
-                        <button onclick="setPpcScenario('concave')" id="btn-ppc-concave" class="w-full text-left p-3 rounded-xl border border-blue-500 bg-blue-50/50 text-blue-900 font-medium text-sm transition">
-                            1. Increasing Opportunity Cost (Concave Curve)
-                        </button>
-                        <button onclick="setPpcScenario('linear')" id="btn-ppc-linear" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium text-sm transition">
-                            2. Constant Opportunity Cost (Straight Line)
-                        </button>
-                        <button onclick="setPpcScenario('points')" id="btn-ppc-points" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium text-sm transition">
-                            3. Efficiency, Inefficiency & Unattainability
-                        </button>
-                        <button onclick="setPpcScenario('growth')" id="btn-ppc-growth" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium text-sm transition">
-                            4. Actual Growth vs. Potential Shift
-                        </button>
+        <!-- ==================== TAB 4: 20-POINT MC EXAM SIMULATOR ==================== -->
+        <section id="section-exam" class="hidden space-y-8">
+            <div class="bg-paper-card border border-border rounded-2xl p-6 sm:p-8 shadow-paper">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-terracotta-soft text-terracotta text-xs font-bold uppercase tracking-wider rounded-md mb-2 border border-terracotta/20">
+                            Section 04 • Final Assessment Simulator
+                        </span>
+                        <h2 class="serif-title text-3xl sm:text-4xl font-bold text-ink">20-Point Unit 1 Multiple Choice Quiz</h2>
+                        <p class="text-ink-light text-xs sm:text-sm mt-1">Simulates official IB questions covering all 1.1–1.4 subtopics with immediate explanations.</p>
                     </div>
 
-                    <div id="ppc-explanation" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-600 leading-relaxed space-y-2">
-                        <!-- Dynamic Text -->
-                    </div>
-                </div>
-
-                <!-- SVG Diagram Rendering -->
-                <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center items-center">
-                    <div class="w-full max-w-lg aspect-square relative flex items-center justify-center p-4">
-                        <svg id="ppc-svg" viewBox="0 0 400 400" class="w-full h-full overflow-visible">
-                            <!-- Axis Lines -->
-                            <line x1="50" y1="350" x2="380" y2="350" stroke="#64748b" stroke-width="2" />
-                            <line x1="50" y1="350" x2="50" y2="20" stroke="#64748b" stroke-width="2" />
-                            
-                            <!-- Axis Labels -->
-                            <text x="380" y="380" font-size="12" font-weight="600" fill="#475569" text-anchor="end">Capital Goods (Good X)</text>
-                            <text x="20" y="20" font-size="12" font-weight="600" fill="#475569" transform="rotate(-90 20,20)" text-anchor="end">Consumer Goods (Good Y)</text>
-                            
-                            <!-- Dynamic SVG Content loaded via JS -->
-                            <g id="ppc-dynamic-content"></g>
-                        </svg>
+                    <div class="flex items-center gap-4 bg-paper-dark p-3 rounded-xl border border-border shrink-0">
+                        <div class="text-center">
+                            <span class="text-[10px] uppercase font-bold text-ink-light block">Progress</span>
+                            <span id="exam-progress-text" class="text-sm font-bold text-ink">0 / 20</span>
+                        </div>
+                        <div class="h-8 w-px bg-border"></div>
+                        <button onclick="resetExam()" class="px-3 py-1.5 bg-paper border border-border text-xs font-bold rounded-lg hover:border-ink transition-all">
+                            🔄 Restart Quiz
+                        </button>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- TAB 4: PRACTICE QUIZ -->
-        <section id="view-quiz" class="hidden space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-2xl font-bold text-slate-900">20-Point Practice Quiz</h2>
-                    <p class="text-sm text-slate-500">Test your vocabulary and theoretical knowledge under exam conditions.</p>
+            <!-- Quiz Questions Container -->
+            <div id="exam-questions-list" class="space-y-6">
+                <!-- Javascript will generate all 20 questions here -->
+            </div>
+
+            <!-- Exam Submit / Results Banner -->
+            <div id="exam-footer" class="bg-paper-card border-2 border-ink rounded-2xl p-8 text-center shadow-paper">
+                <button id="submit-exam-btn" onclick="gradeExam()" class="py-4 px-10 bg-terracotta text-white font-bold text-sm rounded-xl shadow-paper hover:bg-terracotta/90 transition-all transform active:scale-95">
+                    Submit Quiz & Get Final Grade (20 Points)
+                </button>
+
+                <div id="exam-results-panel" class="hidden space-y-4">
+                    <h3 class="serif-title text-3xl font-bold text-ink">Quiz Summary</h3>
+                    <div class="flex justify-center items-center gap-6 my-4">
+                        <div class="p-4 bg-paper border border-border rounded-2xl text-center min-w-[120px]">
+                            <span class="text-xs text-ink-light uppercase font-bold block">Score</span>
+                            <span id="final-score-val" class="serif-title text-4xl font-bold text-terracotta">0/20</span>
+                        </div>
+                        <div class="p-4 bg-paper border border-border rounded-2xl text-center min-w-[120px]">
+                            <span class="text-xs text-ink-light uppercase font-bold block">IB Grade</span>
+                            <span id="final-grade-val" class="serif-title text-4xl font-bold text-olive">Level 7</span>
+                        </div>
+                    </div>
+                    <p id="final-feedback-msg" class="text-sm text-ink font-medium max-w-lg mx-auto">
+                        Feedback message here...
+                    </p>
+                    <button onclick="resetExam()" class="mt-4 px-6 py-2.5 bg-ink text-paper text-xs font-bold rounded-xl hover:bg-black transition-all">
+                        Try Again
+                    </button>
                 </div>
-                <button onclick="startQuiz()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold text-sm shadow-md transition">Reset / New Quiz</button>
-            </div>
-
-            <div id="quiz-container" class="max-w-3xl mx-auto space-y-6">
-                <!-- Dynamically generated questions -->
-            </div>
-
-            <div class="max-w-3xl mx-auto text-center pt-4">
-                <button onclick="gradeQuiz()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition">Submit Quiz</button>
-            </div>
-
-            <!-- Quiz Result Modal/Card -->
-            <div id="quiz-results" class="hidden max-w-3xl mx-auto p-6 bg-slate-900 text-white rounded-2xl text-center space-y-4">
-                <h3 class="text-2xl font-bold">Quiz Results</h3>
-                <p id="quiz-score-text" class="text-4xl font-extrabold text-blue-400">0 / 10</p>
-                <p id="quiz-feedback" class="text-slate-300 text-sm">Review your answers above.</p>
             </div>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
-            IB Economics Unit 1 Foundations Interactive Study Module • Optimized for High Academic Mastery
+    <footer class="border-t border-border bg-paper-dark py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-ink-light space-y-2">
+            <p class="font-serif italic text-sm text-ink">"Economics is a science of thinking in terms of models joined to the art of choosing models which are relevant." — John Maynard Keynes</p>
+            <p>© IB Economics Unit 1 Study Hub • Crafted for top academic performance.</p>
         </div>
     </footer>
 
-    <!-- JavaScript Data and App Logic -->
     <script>
+        /* ==================== DATA STRUCTURES ==================== */
+
+        // 1. VOCABULARY DATA
         const vocabData = [
             // Core Concepts
-            { term: "Scarcity", category: "core", def: "The fundamental economic problem of having unlimited human wants and needs in a world of limited resources.", ex: "Oil, arable land, and skilled labor are all scarce resources." },
-            { term: "Choice", category: "core", def: "Since resources are scarce, economic agents must make decisions between competing alternatives.", ex: "Choosing to spend government funds on healthcare instead of education." },
-            { term: "Opportunity Cost", category: "core", def: "The next best alternative foregone when an economic decision is made.", ex: "The opportunity cost of attending university is the lost wage from working a full-time job." },
-            { term: "Efficiency", category: "core", def: "Making the best possible use of scarce resources to avoid waste.", ex: "Productive efficiency occurs when goods are produced at lowest possible average cost." },
-            { term: "Equity", category: "core", def: "Fairness or justice in the distribution of economic rewards and opportunities (distinct from equality).", ex: "Progressive income taxation aims to create greater economic equity." },
-            { term: "Economic Well-being", category: "core", def: "A multidimensional concept reflecting the quality of life, material living standards, and financial security of individuals.", ex: "Measured by real GDP per capita alongside indicators like health and education." },
-            { term: "Sustainability", category: "core", def: "Meeting the needs of the present generation without compromising the ability of future generations to meet theirs.", ex: "Transitioning to renewable solar energy instead of consuming fossil fuels." },
-            { term: "Change", category: "core", def: "The dynamic nature of economic systems, theories, and real-world conditions over time.", ex: "Shift in employment structure due to technological advancements and AI." },
-            { term: "Interdependence", category: "core", def: "Economic decision-makers (households, firms, governments, nations) depend on each other.", ex: "International trade creates economic interdependence between exporting and importing countries." },
-            { term: "Intervention", category: "core", def: "Government involvement in markets to correct market failures or achieve social goals.", ex: "Imposing price caps or granting subsidies to renewable energy producers." },
+            {
+                term: "Social Science",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "The branch of science that studies human behavior, social relationships, and how societies function and structure choices.",
+                hook: "People + Choice = Social Science.",
+                example: "Analyzing consumer reaction to rising fuel prices."
+            },
+            {
+                term: "Interdependence",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "The idea that economic agents (consumers, firms, governments, nations) depend on each other; actions by one group impact all others.",
+                hook: "No economic actor is an island.",
+                example: "A factory layout in China affects retail prices in Europe."
+            },
+            {
+                term: "Microeconomics",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "The study of individual economic decision-makers (individual consumers, households, single firms, specific markets).",
+                hook: "Micro = Microscope on individual markets.",
+                example: "Studying the price of apples or coffee."
+            },
+            {
+                term: "Macroeconomics",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "The study of the economy as a whole, focusing on aggregate variables like GDP, national inflation, and total unemployment.",
+                hook: "Macro = Big picture aerial view.",
+                example: "Analyzing national economic growth in Japan."
+            },
+            {
+                term: "Scarcity",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "The fundamental economic problem: finite/limited economic resources available to satisfy infinite human wants and needs.",
+                hook: "Infinite Wants > Finite Resources = Scarcity.",
+                example: "Limited clean freshwater available globally."
+            },
+            {
+                term: "Choice",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "The selection between alternative uses of scarce resources. Since resources are scarce, choices must constantly be made.",
+                hook: "Scarcity forces Choice.",
+                example: "Choosing to build a hospital instead of a park."
+            },
+            {
+                term: "Efficiency",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "Making the absolute best possible use of scarce resources, producing maximum output with minimum waste.",
+                hook: "Zero wasted resources.",
+                example: "Operating on the boundary of a PPC."
+            },
+            {
+                term: "Equity",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "Fairness in economic outcomes and distribution of income, opportunity, or resources (differs from total equality).",
+                hook: "Equity = Fairness (Equality = Sameness).",
+                example: "Progressive taxation to assist lower-income households."
+            },
+            {
+                term: "Economic Well-being",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "A multi-dimensional concept describing the material living standards, security, health, and happiness of individuals.",
+                hook: "Quality of life beyond just money.",
+                example: "Access to clean air, healthcare, and job security."
+            },
+            {
+                term: "Sustainability",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "Meeting the needs of the present generation without compromising the ability of future generations to meet their own needs.",
+                hook: "Preserve resources for tomorrow.",
+                example: "Transitioning to solar energy to protect future climate."
+            },
+            {
+                term: "Change",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "The dynamic nature of economic environments, theories, and real-world conditions over time.",
+                hook: "Economy is never static.",
+                example: "Digital transformation altering traditional retail."
+            },
+            {
+                term: "Intervention",
+                cat: "concepts",
+                catLabel: "1.1 Core Concepts",
+                def: "Government involvement in free markets to correct market failures, improve equity, or adjust macroeconomic outcomes.",
+                hook: "Government stepping in to tweak the market.",
+                example: "Imposing taxes on sugary drinks."
+            },
 
             // Factors of Production
-            { term: "Land", category: "fop", def: "All natural resources available for production (raw materials, minerals, water, timber). Reward: Rent.", ex: "Crude oil, gold mines, agricultural land." },
-            { term: "Labor", category: "fop", def: "The physical and mental human effort used in the production of goods and services. Reward: Wages.", ex: "Factory workers, software engineers, doctors." },
-            { term: "Capital", category: "fop", def: "Man-made tools, equipment, machinery, and infrastructure used to produce goods and services. Reward: Interest.", ex: "Industrial robots, delivery vans, factory buildings." },
-            { term: "Entrepreneurship", category: "fop", def: "The ability and willingness to combine land, labor, and capital, taking business risks to innovate. Reward: Profit.", ex: "Steve Jobs founding Apple to market consumer technology." },
+            {
+                term: "Land (Factor of Prod.)",
+                cat: "fop",
+                catLabel: "Factors of Production",
+                def: "All natural, non-manmade resources gifts of nature used in production (minerals, arable land, timber, oceans).",
+                hook: "Natural gifts • Earns RENT.",
+                example: "Crude oil reserves or farmland."
+            },
+            {
+                term: "Labor (Factor of Prod.)",
+                cat: "fop",
+                catLabel: "Factors of Production",
+                def: "The human physical and mental effort contributed to the production of goods and services.",
+                hook: "Human workforce effort • Earns WAGES.",
+                example: "Software developers, factory workers, teachers."
+            },
+            {
+                term: "Capital (Factor of Prod.)",
+                cat: "fop",
+                catLabel: "Factors of Production",
+                def: "Man-made physical tools, machinery, factories, and equipment used to produce other goods and services.",
+                hook: "Tools made to make things • Earns INTEREST.",
+                example: "Assembly line robots or delivery trucks."
+            },
+            {
+                term: "Entrepreneurship",
+                cat: "fop",
+                catLabel: "Factors of Production",
+                def: "The human skill of combining Land, Labor, and Capital, taking financial risks to innovate and organize business.",
+                hook: "Risk-taker & Organizer • Earns PROFIT.",
+                example: "Steve Jobs founding Apple."
+            },
+            {
+                term: "Opportunity Cost",
+                cat: "fop",
+                catLabel: "Factors of Production",
+                def: "The value of the next best alternative forgone (sacrificed) when an economic decision or choice is made.",
+                hook: "What you gave up to get this.",
+                example: "Studying economics instead of going to the cinema."
+            },
+            {
+                term: "Free Goods vs. Economic Goods",
+                cat: "fop",
+                catLabel: "Factors of Production",
+                def: "Economic goods are scarce and have an opportunity cost (e.g. food). Free goods are abundant with zero opportunity cost (e.g. air).",
+                hook: "Economic = Has price & cost; Free = Zero cost.",
+                example: "Seawater vs. bottled mineral water."
+            },
 
-            // Systems
-            { term: "Free Market Economy", category: "systems", def: "An economic system where resource allocation is driven purely by price mechanisms, demand, and supply without state intervention.", ex: "Singapore (closest modern approximation)." },
-            { term: "Planned Economy", category: "systems", def: "An economy where the government/state centrally controls resource allocation, production, and pricing.", ex: "North Korea, former Soviet Union." },
-            { term: "Mixed Economy", category: "systems", def: "An economic system combining private enterprise and market forces with government intervention.", ex: "United States, United Kingdom, France." },
-            { term: "Free Goods", category: "systems", def: "Goods that are unlimited in supply and have no opportunity cost in consumption.", ex: "Air, sunlight, seawater." },
+            // Systems & Questions
+            {
+                term: "3 Basic Economic Questions",
+                cat: "systems",
+                catLabel: "Economic Systems",
+                def: "The core decisions every society faces: 1) What to produce? 2) How to produce it? 3) For whom to produce it?",
+                hook: "What? How? For Whom?",
+                example: "Determining whether to build luxury SUVs or public trains."
+            },
+            {
+                term: "Free Market Economy",
+                cat: "systems",
+                catLabel: "Economic Systems",
+                def: "An economic system where resource allocation is guided entirely by price signals and private individuals without government intervention.",
+                hook: "Invisible hand • Price mechanism rules.",
+                example: "Hong Kong / Singapore market dynamics."
+            },
+            {
+                term: "Planned / Command Economy",
+                cat: "systems",
+                catLabel: "Economic Systems",
+                def: "An economic system where resources are owned and allocated by a central government planning authority.",
+                hook: "Government commands everything.",
+                example: "North Korea or former USSR."
+            },
+            {
+                term: "Mixed Economy",
+                cat: "systems",
+                catLabel: "Economic Systems",
+                def: "An economic system combining free market price mechanisms with public sector government regulation and intervention.",
+                hook: "Markets + Government working together.",
+                example: "United States, France, or UK."
+            },
 
-            // Methodology & Thought
-            { term: "Positive Economics", category: "methodology", def: "Objective economic analysis based on facts, logic, and empirical evidence that can be tested and verified.", ex: "'An increase in tax rates decreased total consumer spending.'" },
-            { term: "Normative Economics", category: "methodology", def: "Subjective statements based on value judgments, ethics, or opinions that cannot be proven true or false.", ex: "'The government ought to provide free healthcare for all citizens.'" },
-            { term: "Ceteris Paribus", category: "methodology", def: "Latin phrase meaning 'all other things remaining constant', used to isolate the relationship between two variables.", ex: "Assuming consumer income stays constant when studying the price impact on demand." },
-            { term: "Adam Smith", category: "methodology", def: "18th-century father of modern economics; advocated for laissez-faire markets and the 'invisible hand'.", ex: "Published 'The Wealth of Nations' (1776)." },
-            { term: "Keynesian Economics", category: "methodology", def: "20th-century macroeconomic theory advocating government spending during downturns to stimulate demand.", ex: "Government stimulus packages during economic recessions." }
+            // Methodology
+            {
+                term: "Positive Economics",
+                cat: "methodology",
+                catLabel: "Methodology",
+                def: "Factual, objective economic statements that can be tested, verified, or refuted using empirical evidence.",
+                hook: "What IS (Fact-based / Testable).",
+                example: "'Unemployment rate currently stands at 4.2%.'"
+            },
+            {
+                term: "Normative Economics",
+                cat: "methodology",
+                catLabel: "Methodology",
+                def: "Subjective, value-based economic statements involving judgements about what ought to be or should be done.",
+                hook: "What SHOULD be (Opinion-based).",
+                example: "'The government should lower income taxes.'"
+            },
+            {
+                term: "Ceteris Paribus",
+                cat: "methodology",
+                catLabel: "Methodology",
+                def: "Latin phrase meaning 'all other variables held constant'. Essential tool for isolating relationships between two variables.",
+                hook: "All else equal.",
+                example: "If price rises, demand falls (ceteris paribus)."
+            },
+
+            // History of Thought
+            {
+                term: "Adam Smith & Laissez-faire",
+                cat: "history",
+                catLabel: "History of Thought",
+                def: "18th C founder of classical economics. Proposed the 'invisible hand' and recommended minimal government involvement (laissez-faire).",
+                hook: "Father of Economics • Let markets be.",
+                example: "The Wealth of Nations (1776)."
+            },
+            {
+                term: "Keynesian Revolution",
+                cat: "history",
+                catLabel: "History of Thought",
+                def: "20th C economic thought arguing that market economies can remain stuck in prolonged recessions without government stimulus spending.",
+                hook: "In a recession, government must spend.",
+                example: "New Deal programs during the Great Depression."
+            },
+            {
+                term: "Behavioral Economics",
+                cat: "history",
+                catLabel: "History of Thought",
+                def: "21st C field blending psychology and economics, showing that humans suffer from cognitive biases and do not always act rationally.",
+                hook: "Humans aren't perfectly rational robots.",
+                example: "Using default opt-in settings to boost retirement savings."
+            }
         ];
 
-        let currentCards = [...vocabData];
-        let currentCardIdx = 0;
-        let isFlipped = false;
-        let masteredCards = new Set();
+        // 2. PPC SCENARIO DATA
+        const ppcScenarios = [
+            {
+                title: "1. Choice & Opportunity Cost",
+                tag: "Movement Along Curve",
+                drawSteps: [
+                    "Draw a concave (bowed-out) PPC curve labeled PPC1.",
+                    "Label X-axis as 'Good A' and Y-axis as 'Good B'.",
+                    "Plot Point A on the curve producing high Good B and low Good A.",
+                    "Plot Point B further right on the curve showing increased Good A.",
+                    "Draw dotted lines to axes showing sacrificed output of Good B."
+                ],
+                svg: `<svg viewBox="0 0 300 300" class="w-full h-full">
+                    <!-- Axes -->
+                    <line x1="40" y1="260" x2="280" y2="260" stroke="#1F2421" stroke-width="2"/>
+                    <line x1="40" y1="260" x2="40" y2="20" stroke="#1F2421" stroke-width="2"/>
+                    <text x="280" y="280" font-size="10" font-weight="bold" fill="#1F2421" text-anchor="end">Good A (Consumer)</text>
+                    <text x="15" y="25" font-size="10" font-weight="bold" fill="#1F2421" transform="rotate(-90 15 25)">Good B (Capital)</text>
+                    <!-- PPC Curve -->
+                    <path d="M 40 50 Q 200 60 250 260" fill="none" stroke="#C85A32" stroke-width="3"/>
+                    <!-- Dotted Lines for Pt A -->
+                    <line x1="40" y1="90" x2="135" y2="90" stroke="#4A524D" stroke-dasharray="3,3"/>
+                    <line x1="135" y1="90" x2="135" y2="260" stroke="#4A524D" stroke-dasharray="3,3"/>
+                    <circle cx="135" cy="90" r="5" fill="#1F2421"/>
+                    <text x="135" y="80" font-size="11" font-weight="bold" fill="#1F2421">Point A</text>
+                    <!-- Dotted Lines for Pt B -->
+                    <line x1="40" y1="180" x2="210" y2="180" stroke="#4A524D" stroke-dasharray="3,3"/>
+                    <line x1="210" y1="180" x2="210" y2="260" stroke="#4A524D" stroke-dasharray="3,3"/>
+                    <circle cx="210" cy="180" r="5" fill="#C85A32"/>
+                    <text x="218" y="180" font-size="11" font-weight="bold" fill="#C85A32">Point B</text>
+                    <!-- Movement Arrow -->
+                    <path d="M 145 105 Q 180 130 195 160" fill="none" stroke="#5A7052" stroke-width="2" marker-end="url(#arrow)"/>
+                </svg>`,
+                defs: "Opportunity Cost: The value of the next best alternative forgone when making an economic choice.",
+                script: "A movement along the Production Possibility Curve (PPC) from Point A to Point B illustrates choice and opportunity cost. Because resources are scarce, increasing production of Good A requires reallocating Factors of Production away from Good B. The quantity of Good B sacrificed represents the opportunity cost of gaining more units of Good A.",
+                tip: "Always draw arrows along the curve and label the exact amount lost on the vertical axis."
+            },
+            {
+                title: "2. Inefficiency & Unemployment",
+                tag: "Point Inside PPC",
+                drawSteps: [
+                    "Draw a bowed-out PPC curve labeled PPC.",
+                    "Label X-axis as 'Consumer Goods' and Y-axis as 'Capital Goods'.",
+                    "Plot a point INSIDE the boundary curve (label as Point X).",
+                    "Explain that Point X represents unused/idle factors of production."
+                ],
+                svg: `<svg viewBox="0 0 300 300" class="w-full h-full">
+                    <line x1="40" y1="260" x2="280" y2="260" stroke="#1F2421" stroke-width="2"/>
+                    <line x1="40" y1="260" x2="40" y2="20" stroke="#1F2421" stroke-width="2"/>
+                    <text x="280" y="280" font-size="10" font-weight="bold" fill="#1F2421" text-anchor="end">Consumer Goods</text>
+                    <text x="15" y="25" font-size="10" font-weight="bold" fill="#1F2421" transform="rotate(-90 15 25)">Capital Goods</text>
+                    <path d="M 40 50 Q 200 60 250 260" fill="none" stroke="#1F2421" stroke-width="3"/>
+                    <!-- Inside point -->
+                    <circle cx="120" cy="180" r="6" fill="#C85A32"/>
+                    <text x="132" y="185" font-size="12" font-weight="bold" fill="#C85A32">Point X (Inefficient)</text>
+                    <text x="180" y="100" font-size="10" font-bold fill="#5A7052">PPC (Full Capacity)</text>
+                </svg>`,
+                defs: "Production Possibility Curve: Shows maximum combination of two goods an economy can produce when using all resources fully and efficiently.",
+                script: "Point X lies strictly inside the PPC boundary. This indicates economic inefficiency or unemployment of resources. The economy is failing to produce at its potential capacity because available Factors of Production (Land, Labor, or Capital) are idle or misallocated.",
+                tip: "State clearly that inside points mean society CAN produce more of BOTH goods without any opportunity cost."
+            },
+            {
+                title: "3. Actual Economic Growth",
+                tag: "Inside to Boundary",
+                drawSteps: [
+                    "Draw a standard PPC curve.",
+                    "Plot Point A inside the curve (representing initial recession/unemployment).",
+                    "Plot Point B closer to or on the PPC boundary.",
+                    "Draw an arrow moving from Point A towards Point B."
+                ],
+                svg: `<svg viewBox="0 0 300 300" class="w-full h-full">
+                    <line x1="40" y1="260" x2="280" y2="260" stroke="#1F2421" stroke-width="2"/>
+                    <line x1="40" y1="260" x2="40" y2="20" stroke="#1F2421" stroke-width="2"/>
+                    <path d="M 40 50 Q 200 60 250 260" fill="none" stroke="#1F2421" stroke-width="3"/>
+                    <circle cx="100" cy="200" r="5" fill="#C85A32"/>
+                    <text x="80" y="215" font-size="11" font-weight="bold" fill="#C85A32">Point A</text>
+                    <circle cx="170" cy="120" r="5" fill="#5A7052"/>
+                    <text x="180" y="120" font-size="11" font-weight="bold" fill="#5A7052">Point B</text>
+                    <!-- Movement Arrow -->
+                    <line x1="110" y1="190" x2="160" y2="130" stroke="#5A7052" stroke-width="2" stroke-dasharray="2,2"/>
+                </svg>`,
+                defs: "Actual Growth: An increase in real output produced by an economy in a given time period, usually achieved by reducing resource unemployment.",
+                script: "Actual growth is represented by a movement from an internal Point A to Point B towards the PPC curve. By employing previously idle resources or improving operational efficiency, total output increases without expanding physical productive capacity.",
+                tip: "Do NOT shift the PPC curve for actual growth. Just move the point inside towards the boundary!"
+            },
+            {
+                title: "4. Potential Growth (Outward Shift)",
+                tag: "Curve Shifts Out",
+                drawSteps: [
+                    "Draw initial curve PPC1.",
+                    "Draw an outward parallel curve labeled PPC2.",
+                    "Draw outward arrows showing expansion across both axes.",
+                    "State causes: Increase in quantity or quality of FoP."
+                ],
+                svg: `<svg viewBox="0 0 300 300" class="w-full h-full">
+                    <line x1="40" y1="260" x2="280" y2="260" stroke="#1F2421" stroke-width="2"/>
+                    <line x1="40" y1="260" x2="40" y2="20" stroke="#1F2421" stroke-width="2"/>
+                    <path d="M 40 80 Q 170 90 210 260" fill="none" stroke="#1F2421" stroke-width="2.5"/>
+                    <path d="M 40 40 Q 220 50 260 260" fill="none" stroke="#C85A32" stroke-width="3"/>
+                    <text x="160" y="120" font-size="10" font-bold fill="#1F2421">PPC 1</text>
+                    <text x="220" y="70" font-size="10" font-bold fill="#C85A32">PPC 2</text>
+                    <!-- Shift arrows -->
+                    <line x1="120" y1="125" x2="155" y2="105" stroke="#C85A32" stroke-width="2"/>
+                </svg>`,
+                defs: "Potential Growth: An expansion in the total productive capacity of an economy over time.",
+                script: "An outward shift from PPC1 to PPC2 represents potential economic growth. This occurs when there is an increase in the quantity or quality of Factors of Production (e.g. technological advancements, higher workforce skills, or new capital investments).",
+                tip: "Always list both 'quantity' and 'quality' of factors of production in your exam script."
+            },
+            {
+                title: "5. Increasing Opportunity Cost",
+                tag: "Concave / Bowed-out",
+                drawSteps: [
+                    "Draw a curved, concave PPC (bowed out from origin).",
+                    "Show equal step increments along X-axis.",
+                    "Show increasing larger sacrifices along Y-axis.",
+                    "Explain factor non-adaptability."
+                ],
+                svg: `<svg viewBox="0 0 300 300" class="w-full h-full">
+                    <line x1="40" y1="260" x2="280" y2="260" stroke="#1F2421" stroke-width="2"/>
+                    <line x1="40" y1="260" x2="40" y2="20" stroke="#1F2421" stroke-width="2"/>
+                    <path d="M 40 50 Q 200 60 250 260" fill="none" stroke="#C85A32" stroke-width="3"/>
+                    <text x="150" y="180" font-size="11" font-bold fill="#C85A32">Concave Shape</text>
+                </svg>`,
+                defs: "Law of Increasing Opportunity Cost: As output of one good increases, the opportunity cost of producing additional units rises.",
+                script: "The PPC is concave (bowed out) because Factors of Production are not perfectly adaptable to alternative uses. Agricultural land and farm labor cannot seamlessly produce microchips; as production shifts, increasingly unsuitable resources must be transferred.",
+                tip: "Use the word 'imperfect adaptability' in your response—examiners look specifically for this phrase!"
+            },
+            {
+                title: "6. Constant Opportunity Cost",
+                tag: "Linear / Straight Line",
+                drawSteps: [
+                    "Draw a straight line PPC connecting Y-axis and X-axis.",
+                    "Label both axes clearly.",
+                    "Explain perfect adaptability of resources."
+                ],
+                svg: `<svg viewBox="0 0 300 300" class="w-full h-full">
+                    <line x1="40" y1="260" x2="280" y2="260" stroke="#1F2421" stroke-width="2"/>
+                    <line x1="40" y1="260" x2="40" y2="20" stroke="#1F2421" stroke-width="2"/>
+                    <line x1="40" y1="60" x2="240" y2="260" stroke="#5A7052" stroke-width="3"/>
+                    <text x="140" y="140" font-size="11" font-bold fill="#5A7052">Linear PPC</text>
+                </svg>`,
+                defs: "Constant Opportunity Cost: Sacrificing a fixed amount of Good B for every additional unit of Good A produced.",
+                script: "A straight-line (linear) PPC indicates constant opportunity cost. This rare situation occurs when Factors of Production are perfectly adaptable between the two goods (e.g., switching between producing black pens and blue pens).",
+                tip: "Key phrase: 'Perfect resource substitution'."
+            }
+        ];
 
-        // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
-            updateCardDisplay();
-            renderGlossary();
-            setPpcScenario('concave');
-            startQuiz();
-        });
+        // 3. DRILL DATA
+        const drillStatements = [
+            { text: "Increasing the national minimum wage to $15 per hour will increase youth unemployment.", type: "positive", expl: "Positive! Even if incorrect, it is a statement of testable cause-and-effect that can be empirically verified." },
+            { text: "The government ought to provide free universal university education to reduce income inequality.", type: "normative", expl: "Normative! Uses value judgment words like 'ought to'." },
+            { text: "Inflation rate in Singapore was lower than in the United Kingdom in 2023.", type: "positive", expl: "Positive! This is a factual claim that can be verified with economic data." },
+            { text: "Taxes on rich corporate CEOs are far too high and unfair.", type: "normative", expl: "Normative! Contains subjective value judgments ('too high', 'unfair')." },
+            { text: "A decrease in price leads to an increase in quantity demanded, ceteris paribus.", type: "positive", expl: "Positive! A fundamental economic law that can be tested." },
+            { text: "Unemployment is a far worse social problem than inflation.", type: "normative", expl: "Normative! Compares two subjective priorities based on personal value judgment." },
+            { text: "Subsidizing solar panel installations reduces carbon emissions.", type: "positive", expl: "Positive! Testable scientific/economic hypothesis." },
+            { text: "Developing countries should prioritize environmental protection over industrial expansion.", type: "normative", expl: "Normative! Uses 'should' to make an ethical policy recommendation." }
+        ];
 
-        // Tab Switching
+        // 4. 20-POINT MC EXAM DATA
+        const examQuestions = [
+            {
+                q: "1. Which of the following best defines the fundamental economic problem of scarcity?",
+                opts: ["A. Unlimited resources available to satisfy limited wants.", "B. Finite resources available to satisfy infinite human wants.", "C. High inflation reducing consumer purchasing power.", "D. Inefficient distribution of wealth by governments."],
+                ans: 1,
+                expl: "Scarcity exists because human wants are infinite, but the physical resources to produce goods are finite."
+            },
+            {
+                q: "2. A farmer chooses to plant wheat instead of barley on her land. The barley forgone represents:",
+                opts: ["A. Accounting profit.", "B. Free good.", "C. Opportunity cost.", "D. Sustainable yield."],
+                ans: 2,
+                expl: "Opportunity cost is defined as the next best alternative forgone when making an economic choice."
+            },
+            {
+                q: "3. Which factor of production yields 'Interest' as its income payment?",
+                opts: ["A. Land", "B. Labor", "C. Capital", "D. Entrepreneurship"],
+                ans: 2,
+                expl: "The income reward for Capital is Interest. Land earns Rent, Labor earns Wages, and Entrepreneurship earns Profit."
+            },
+            {
+                q: "4. A point lying strictly INSIDE a Production Possibility Curve (PPC) represents:",
+                opts: ["A. Potential economic growth.", "B. Unattainable production given current resources.", "C. Resource unemployment or inefficiency.", "D. Allocative efficiency."],
+                ans: 2,
+                expl: "Points inside the PPC indicate that available factors of production are idle or inefficiently used."
+            },
+            {
+                q: "5. Why is a standard PPC concave (bowed-out) from the origin?",
+                opts: ["A. Factors of production are perfectly adaptable between goods.", "B. Factors of production are not perfectly adaptable to alternative uses.", "C. Total output decreases as technology improves.", "D. Opportunity cost remains constant."],
+                ans: 1,
+                expl: "The bowed-out shape reflects increasing opportunity cost due to imperfect resource adaptability."
+            },
+            {
+                q: "6. Which statement is a POSITIVE economic statement?",
+                opts: ["A. The government should reduce fuel taxes immediately.", "B. High tariffs on steel will increase domestic manufacturing jobs.", "C. Income inequality is the most critical issue facing society.", "D. Public healthcare ought to be funded entirely by taxes."],
+                ans: 1,
+                expl: "Option B is testable using data and empirical evidence, making it positive."
+            },
+            {
+                q: "7. The Latin term 'Ceteris Paribus' translates to:",
+                opts: ["A. Consumer sovereignty rules.", "B. All other variables held constant.", "C. Free market equilibrium.", "D. Government planning is required."],
+                ans: 1,
+                expl: "Ceteris paribus means 'all other things being equal/constant'."
+            },
+            {
+                q: "8. In a pure command/planned economy, resource allocation is decided by:",
+                opts: ["A. Price mechanism and market demand.", "B. Central government planning authority.", "C. Individual consumer choices.", "D. Multinational corporations."],
+                ans: 1,
+                expl: "In a command economy, the state/central authority owns resources and makes allocation choices."
+            },
+            {
+                q: "9. Which economist famously introduced the concept of the 'Invisible Hand'?",
+                opts: ["A. John Maynard Keynes", "B. Karl Marx", "C. Adam Smith", "D. Milton Friedman"],
+                ans: 2,
+                expl: "Adam Smith advocated for free markets guided by the 'invisible hand' in 1776."
+            },
+            {
+                q: "10. An outward shift of the entire PPC curve indicates:",
+                opts: ["A. Actual growth due to lower unemployment.", "B. An increase in potential output/capacity.", "C. A decrease in consumer demand.", "D. Higher inflation rates."],
+                ans: 1,
+                expl: "An outward shift signifies potential growth resulting from expanded productive capacity."
+            },
+            {
+                q: "11. Which of the following is considered a FREE GOOD?",
+                opts: ["A. Solar energy panel electricity", "B. Clean air in a crowded city center", "C. Sunlight in an open desert", "D. Tap water"],
+                ans: 2,
+                expl: "Sunlight in a desert is abundant with zero opportunity cost to consume."
+            },
+            {
+                q: "12. The three basic economic questions faced by every society are:",
+                opts: ["A. Why, When, Where to produce?", "B. What, How, For Whom to produce?", "C. Taxes, Subsidies, Tariffs?", "D. Export, Import, Inflate?"],
+                ans: 1,
+                expl: "Every economy must answer: What to produce, How to produce, and For Whom to produce."
+            },
+            {
+                q: "13. What key development characterized 20th-century Keynesian economic thought?",
+                opts: ["A. Advocating complete absence of government intervention.", "B. Arguing that government spending is required to exit deep recessions.", "C. Proposing return to feudal land tenure.", "D. Prioritizing pure barter trading."],
+                ans: 1,
+                expl: "Keynes argued that aggregate demand falls during recessions, requiring government stimulus."
+            },
+            {
+                q: "14. A straight-line (linear) PPC implies:",
+                opts: ["A. Increasing opportunity cost.", "B. Constant opportunity cost.", "C. Zero productive efficiency.", "D. Unattainable output."],
+                ans: 1,
+                expl: "Linear PPCs mean resources are perfectly adaptable, keeping opportunity cost constant."
+            },
+            {
+                q: "15. Equity in economics refers to:",
+                opts: ["A. Absolute equal distribution of income.", "B. Fairness in economic distribution.", "C. Maximum speed of GDP growth.", "D. Elimination of all taxes."],
+                ans: 1,
+                expl: "Equity means fairness, whereas equality means sameness."
+            },
+            {
+                q: "16. Which factor of production includes man-made tools and machinery?",
+                opts: ["A. Land", "B. Labor", "C. Capital", "D. Entrepreneurship"],
+                ans: 2,
+                expl: "Capital consists of manufactured resources used to produce goods and services."
+            },
+            {
+                q: "17. Movement along a static PPC from one point on the curve to another shows:",
+                opts: ["A. A change in potential output.", "B. A trade-off and opportunity cost.", "C. An increase in total unemployment.", "D. Technological breakdown."],
+                ans: 1,
+                expl: "Reallocating along the curve involves choosing more of one good at the cost of another."
+            },
+            {
+                q: "18. Behavioral economics differs from traditional classical economics by assuming humans:",
+                opts: ["A. Are always perfectly rational decision makers.", "B. Have cognitive biases and limited rationality.", "C. Never care about personal utility.", "D. Only react to law regulations."],
+                ans: 1,
+                expl: "Behavioral economics incorporates psychology, recognizing bounded rationality and biases."
+            },
+            {
+                q: "19. Which economy combines both private market price mechanisms and public sector government intervention?",
+                opts: ["A. Free market economy", "B. Planned economy", "C. Mixed economy", "D. Traditional barter economy"],
+                ans: 2,
+                expl: "Mixed economies blend private enterprise with government regulations and public services."
+            },
+            {
+                q: "20. Sustainable development requires:",
+                opts: ["A. Consuming all available non-renewable resources today.", "B. Meeting present needs without compromising future generations' needs.", "C. Stopping all global manufacturing.", "D. Maximizing short-term profit at all costs."],
+                ans: 1,
+                expl: "Sustainability balances current resource use with long-term ecological protection for the future."
+            }
+        ];
+
+
+        /* ==================== APP STATE & CONTROLLERS ==================== */
+        let currentTab = 'vocab';
+        let currentVocabFilter = 'all';
+        let currentVocabMode = 'dictionary';
+        let flashcardIndex = 0;
+        let isCardFlipped = false;
+        let activePPCIdx = 0;
+
+        // Drill state
+        let drillIdx = 0;
+        let drillScore = 0;
+
+        // Exam state
+        let userExamAnswers = new Array(20).fill(null);
+
+        /* ==================== TAB NAVIGATION ==================== */
         function switchTab(tabId) {
-            ['flashcards', 'glossary', 'ppc', 'quiz'].forEach(t => {
-                document.getElementById(`view-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).className = "px-3 sm:px-4 py-1.5 rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900";
+            currentTab = tabId;
+            ['vocab', 'ppc', 'drill', 'exam'].forEach(t => {
+                document.getElementById(`section-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tab-${t}`);
+                if (btn) btn.classList.remove('active');
             });
-            document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).className = "px-3 sm:px-4 py-1.5 rounded-lg transition-all duration-200 bg-white text-blue-600 shadow-sm font-semibold";
+
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (activeBtn) activeBtn.classList.add('active');
+            
+            // Sync mobile dropdown
+            document.getElementById('mobile-nav').value = tabId;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- FLASHCARD LOGIC ---
-        function updateCardDisplay() {
-            if (currentCards.length === 0) {
-                document.getElementById('card-term').innerText = "All Mastered!";
-                document.getElementById('card-definition').innerText = "You have marked all cards in this category as mastered.";
-                document.getElementById('card-category').innerText = "-";
-                document.getElementById('card-index').innerText = "0 / 0";
-                document.getElementById('card-example').innerText = "Reset progress to try again.";
+        /* ==================== SECTION 1: VOCAB CONTROLLERS ==================== */
+        function renderDictionary() {
+            const container = document.getElementById('dictionary-view');
+            container.innerHTML = '';
+
+            const searchTerm = document.getElementById('vocab-search').value.toLowerCase();
+
+            const filtered = vocabData.filter(item => {
+                const matchesCat = currentVocabFilter === 'all' || item.cat === currentVocabFilter;
+                const matchesSearch = item.term.toLowerCase().includes(searchTerm) || 
+                                      item.def.toLowerCase().includes(searchTerm) ||
+                                      item.hook.toLowerCase().includes(searchTerm);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-ink-light bg-paper-card border border-border rounded-2xl">
+                        <p class="font-serif italic text-lg">No terms matched your filter criteria.</p>
+                        <button onclick="resetVocabFilters()" class="mt-3 text-xs text-terracotta font-bold underline">Reset Filters</button>
+                    </div>
+                `;
                 return;
             }
 
-            const card = currentCards[currentCardIdx];
-            document.getElementById('card-term').innerText = card.term;
-            document.getElementById('card-definition').innerText = card.def;
-            document.getElementById('card-category').innerText = card.category;
-            document.getElementById('card-category-back').innerText = card.category;
-            document.getElementById('card-example').innerText = `Key Context: ${card.ex}`;
-            document.getElementById('card-index').innerText = `${currentCardIdx + 1} / ${currentCards.length}`;
-
-            // Reset Flip State
-            if (isFlipped) {
-                document.getElementById('flashcard').classList.remove('rotate-y-180');
-                isFlipped = false;
-            }
-        }
-
-        function flipCard() {
-            const fc = document.getElementById('flashcard');
-            isFlipped = !isFlipped;
-            if (isFlipped) {
-                fc.classList.add('rotate-y-180');
-            } else {
-                fc.classList.remove('rotate-y-180');
-            }
-        }
-
-        function nextCard() {
-            if (currentCards.length === 0) return;
-            currentCardIdx = (currentCardIdx + 1) % currentCards.length;
-            updateCardDisplay();
-        }
-
-        function prevCard() {
-            if (currentCards.length === 0) return;
-            currentCardIdx = (currentCardIdx - 1 + currentCards.length) % currentCards.length;
-            updateCardDisplay();
-        }
-
-        function markMastered() {
-            if (currentCards.length === 0) return;
-            masteredCards.add(currentCards[currentCardIdx].term);
-            currentCards.splice(currentCardIdx, 1);
-            if (currentCardIdx >= currentCards.length) currentCardIdx = 0;
-            updateCardDisplay();
-        }
-
-        function filterCards() {
-            const cat = document.getElementById('card-filter').value;
-            if (cat === 'all') {
-                currentCards = vocabData.filter(c => !masteredCards.has(c.term));
-            } else {
-                currentCards = vocabData.filter(c => c.category === cat && !masteredCards.has(c.term));
-            }
-            currentCardIdx = 0;
-            updateCardDisplay();
-        }
-
-        function resetCardStats() {
-            masteredCards.clear();
-            filterCards();
-        }
-
-        // --- GLOSSARY LOGIC ---
-        function renderGlossary() {
-            const query = document.getElementById('glossary-search').value.toLowerCase();
-            const grid = document.getElementById('glossary-grid');
-            grid.innerHTML = '';
-
-            const filtered = vocabData.filter(v => 
-                v.term.toLowerCase().includes(query) || v.def.toLowerCase().includes(query)
-            );
-
-            filtered.forEach(v => {
+            filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 transition";
+                card.className = "bg-paper-card border border-border rounded-2xl p-5 shadow-paper flex flex-col justify-between space-y-3 hover:border-border-strong transition-all";
                 card.innerHTML = `
                     <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">${v.term}</h4>
-                            <span class="text-xs uppercase font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">${v.category}</span>
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-paper-dark border border-border text-ink-light">
+                                ${item.catLabel}
+                            </span>
                         </div>
-                        <p class="text-sm text-slate-600 leading-relaxed mb-3">${v.def}</p>
+                        <h3 class="serif-title text-xl font-bold text-ink">${item.term}</h3>
+                        <p class="text-xs sm:text-sm text-ink-light mt-2 leading-relaxed">${item.def}</p>
                     </div>
-                    <div class="text-xs text-blue-700 font-medium bg-blue-50/50 p-2 rounded-lg border border-blue-100">
-                        <span class="font-bold">Example:</span> ${v.ex}
+                    
+                    <div class="space-y-2 pt-3 border-t border-border">
+                        <div class="p-2.5 rounded-lg bg-terracotta-soft/50 border border-terracotta/20 text-xs">
+                            <span class="font-bold text-terracotta uppercase text-[10px] block">🧠 IB Memory Hook</span>
+                            <span class="text-ink font-medium italic">${item.hook}</span>
+                        </div>
+                        <p class="text-[11px] text-ink-light">
+                            <strong class="text-ink">Context:</strong> ${item.example}
+                        </p>
                     </div>
                 `;
-                grid.appendChild(card);
+                container.appendChild(card);
             });
         }
 
-        // --- PPC DIAGRAM LOGIC ---
-        function setPpcScenario(scenario) {
-            const svgContent = document.getElementById('ppc-dynamic-content');
-            const exp = document.getElementById('ppc-explanation');
-            
-            // Highlight Buttons
-            ['concave', 'linear', 'points', 'growth'].forEach(s => {
-                const b = document.getElementById(`btn-ppc-${s}`);
-                if (s === scenario) {
-                    b.className = "w-full text-left p-3 rounded-xl border border-blue-500 bg-blue-50 text-blue-900 font-medium text-sm transition";
+        function filterCategory(cat) {
+            currentVocabFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.className = "cat-btn px-3 py-1.5 rounded-lg border border-border bg-paper-dark text-ink-light font-semibold hover:border-ink transition-all shrink-0";
+            });
+            const activeBtn = document.getElementById(`cat-${cat}`);
+            if (activeBtn) {
+                activeBtn.className = "cat-btn active px-3 py-1.5 rounded-lg border border-ink bg-ink text-paper font-semibold transition-all shrink-0";
+            }
+            renderDictionary();
+            flashcardIndex = 0;
+            updateFlashcard();
+        }
+
+        function filterVocab() {
+            renderDictionary();
+        }
+
+        function resetVocabFilters() {
+            document.getElementById('vocab-search').value = '';
+            filterCategory('all');
+        }
+
+        function toggleVocabMode(mode) {
+            currentVocabMode = mode;
+            const dictView = document.getElementById('dictionary-view');
+            const flashView = document.getElementById('flashcard-view');
+
+            const btnDict = document.getElementById('mode-dict');
+            const btnCards = document.getElementById('mode-cards');
+
+            if (mode === 'dictionary') {
+                dictView.classList.remove('hidden');
+                flashView.classList.add('hidden');
+                btnDict.className = "px-3 py-1 text-xs font-bold rounded-lg bg-paper text-ink shadow-paper-sm";
+                btnCards.className = "px-3 py-1 text-xs font-bold rounded-lg text-ink-light hover:text-ink";
+            } else {
+                dictView.classList.add('hidden');
+                flashView.classList.remove('hidden');
+                btnCards.className = "px-3 py-1 text-xs font-bold rounded-lg bg-paper text-ink shadow-paper-sm";
+                btnDict.className = "px-3 py-1 text-xs font-bold rounded-lg text-ink-light hover:text-ink";
+                updateFlashcard();
+            }
+        }
+
+        function updateFlashcard() {
+            const filtered = vocabData.filter(item => currentVocabFilter === 'all' || item.cat === currentVocabFilter);
+            if (filtered.length === 0) return;
+
+            if (flashcardIndex >= filtered.length) flashcardIndex = 0;
+            if (flashcardIndex < 0) flashcardIndex = filtered.length - 1;
+
+            const current = filtered[flashcardIndex];
+
+            // Reset flip
+            const cardEl = document.getElementById('flashcard');
+            cardEl.classList.remove('card-flipped');
+            isCardFlipped = false;
+
+            // Content
+            document.getElementById('card-index').innerText = `Card ${flashcardIndex + 1} of ${filtered.length}`;
+            document.getElementById('card-status-badge').innerText = current.catLabel;
+            document.getElementById('card-front-title').innerText = current.term;
+            document.getElementById('card-front-category').innerText = current.catLabel;
+
+            document.getElementById('card-back-def').innerText = current.def;
+            document.getElementById('card-back-hook').innerText = current.hook;
+            document.getElementById('card-back-ex').innerText = `Example: ${current.example}`;
+
+            // Progress bar
+            const pct = ((flashcardIndex + 1) / filtered.length) * 100;
+            document.getElementById('flashcard-progress').style.width = `${pct}%`;
+        }
+
+        function flipFlashcard() {
+            const cardEl = document.getElementById('flashcard');
+            isCardFlipped = !isCardFlipped;
+            if (isCardFlipped) {
+                cardEl.classList.add('card-flipped');
+            } else {
+                cardEl.classList.remove('card-flipped');
+            }
+        }
+
+        function nextFlashcard() {
+            flashcardIndex++;
+            updateFlashcard();
+        }
+
+        function prevFlashcard() {
+            flashcardIndex--;
+            updateFlashcard();
+        }
+
+        function markCardMastered() {
+            nextFlashcard();
+        }
+
+
+        /* ==================== SECTION 2: PPC CONTROLLERS ==================== */
+        function loadPPCScenario(idx) {
+            activePPCIdx = idx;
+            const data = ppcScenarios[idx];
+
+            document.querySelectorAll('.ppc-btn').forEach((btn, i) => {
+                if (i === idx) {
+                    btn.className = "ppc-btn active p-3 rounded-xl border border-ink bg-ink text-paper text-left text-xs font-bold transition-all";
                 } else {
-                    b.className = "w-full text-left p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium text-sm transition";
+                    btn.className = "ppc-btn p-3 rounded-xl border border-border bg-paper-dark text-ink text-left text-xs font-bold hover:border-ink transition-all";
                 }
             });
 
-            if (scenario === 'concave') {
-                svgContent.innerHTML = `
-                    <path d="M 50 50 Q 250 80 350 350" fill="none" stroke="#2563eb" stroke-width="4"/>
-                    <text x="260" y="120" font-size="12" fill="#2563eb" font-weight="bold">Bowed-out PPC Curve</text>
-                `;
-                exp.innerHTML = `
-                    <p class="font-bold text-slate-800">Increasing Opportunity Cost (Concave Curve)</p>
-                    <p>The standard PPC bows outward away from the origin. This occurs because factors of production are <strong>not perfectly adaptable</strong> to all types of production.</p>
-                    <p class="text-xs text-slate-500">Key Takeaway: Reallocating resources from wheat to computers yields progressively smaller increases in computers because farmers make poor tech engineers.</p>
-                `;
-            } else if (scenario === 'linear') {
-                svgContent.innerHTML = `
-                    <line x1="50" y1="50" x2="350" y2="350" stroke="#2563eb" stroke-width="4"/>
-                    <text x="210" y="180" font-size="12" fill="#2563eb" font-weight="bold">Linear PPC</text>
-                `;
-                exp.innerHTML = `
-                    <p class="font-bold text-slate-800">Constant Opportunity Cost (Linear Curve)</p>
-                    <p>A straight-line PPC indicates that factors of production are <strong>perfectly adaptable</strong> between both products.</p>
-                    <p class="text-xs text-slate-500">Key Takeaway: Reallocating resources yields a constant tradeoff ratio (e.g., producing red pens vs. blue pens).</p>
-                `;
-            } else if (scenario === 'points') {
-                svgContent.innerHTML = `
-                    <path d="M 50 50 Q 250 80 350 350" fill="none" stroke="#2563eb" stroke-width="4"/>
-                    <!-- Inside Point (Inefficient) -->
-                    <circle cx="150" cy="250" r="6" fill="#ef4444"/>
-                    <text x="165" y="255" font-size="12" font-weight="bold" fill="#ef4444">Point A (Inefficient)</text>
+            document.getElementById('ppc-diagram-title').innerText = data.title;
+            document.getElementById('ppc-tag').innerText = data.tag;
+            document.getElementById('ppc-svg-container').innerHTML = data.svg;
 
-                    <!-- On Curve Point (Efficient) -->
-                    <circle cx="210" cy="135" r="6" fill="#10b981"/>
-                    <text x="225" y="130" font-size="12" font-weight="bold" fill="#10b981">Point B (Efficient)</text>
+            // Drawing Steps
+            const stepsList = document.getElementById('ppc-draw-steps');
+            stepsList.innerHTML = '';
+            data.drawSteps.forEach(step => {
+                const li = document.createElement('li');
+                li.innerText = step;
+                stepsList.appendChild(li);
+            });
 
-                    <!-- Outside Curve (Unattainable) -->
-                    <circle cx="300" cy="120" r="6" fill="#f59e0b"/>
-                    <text x="315" y="115" font-size="12" font-weight="bold" fill="#f59e0b">Point C (Unattainable)</text>
-                `;
-                exp.innerHTML = `
-                    <p class="font-bold text-slate-800">Efficiency & Scarcity Demonstrations</p>
-                    <ul class="list-disc pl-4 space-y-1">
-                        <li><strong>Point A (Inside):</strong> Inefficiency or unemployment of economic resources.</li>
-                        <li><strong>Point B (On Curve):</strong> Productive efficiency and full employment of resources.</li>
-                        <li><strong>Point C (Outside):</strong> Currently unattainable due to resource scarcity.</li>
-                    </ul>
-                `;
-            } else if (scenario === 'growth') {
-                svgContent.innerHTML = `
-                    <path d="M 50 100 Q 200 120 280 350" fill="none" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6"/>
-                    <path d="M 50 50 Q 250 80 350 350" fill="none" stroke="#2563eb" stroke-width="4"/>
-                    <!-- Arrow -->
-                    <path d="M 180 180 L 220 150" stroke="#10b981" stroke-width="3" marker-end="url(#arrow)"/>
-                    <text x="200" y="240" font-size="12" font-weight="bold" fill="#2563eb">Outward Shift (Potential Growth)</text>
-                `;
-                exp.innerHTML = `
-                    <p class="font-bold text-slate-800">Actual vs. Potential Growth</p>
-                    <p><strong>Actual Growth:</strong> Movement from a point inside the curve toward the boundary.</p>
-                    <p><strong>Potential Growth (Outward Shift):</strong> An expansion of maximum production possibilities caused by an increase in the <em>quantity</em> or <em>quality</em> of Factors of Production (e.g., new technology, increased labor force).</p>
-                `;
-            }
+            // Written Script
+            document.getElementById('ppc-script-defs').innerText = data.defs;
+            document.getElementById('ppc-script-explanation').innerText = data.script;
+            document.getElementById('ppc-script-protip').innerText = data.tip;
         }
 
-        // --- PRACTICE QUIZ LOGIC ---
-        const quizQuestions = [
-            {
-                q: "Which factor of production yields 'interest' as its monetary reward?",
-                options: ["Land", "Labor", "Capital", "Entrepreneurship"],
-                answer: 2
-            },
-            {
-                q: "A statement like 'The government should lower tax rates to help poor families' is classified as:",
-                options: ["Positive economics", "Normative economics", "Empirical economics", "Behavioral economics"],
-                answer: 1
-            },
-            {
-                q: "What causes a bowed-out (concave) Production Possibilities Curve?",
-                options: ["Constant opportunity cost", "Unemployment of labor", "Non-adaptability of factors of production", "Inflation"],
-                answer: 2
-            },
-            {
-                q: "Which concept is defined as 'the value of the next best alternative foregone'?",
-                options: ["Scarcity", "Equity", "Opportunity Cost", "Sustainability"],
-                answer: 2
-            },
-            {
-                q: "In a pure Free Market Economy, resource allocation decisions are made primarily by:",
-                options: ["Central planning authorities", "The price mechanism and private agents", "Non-governmental organizations", "International trade bodies"],
-                answer: 1
-            },
-            {
-                q: "The Latin phrase 'Ceteris Paribus' translates to:",
-                options: ["Buyer beware", "All other things remaining equal", "After this, therefore because of this", "Value judgment"],
-                answer: 1
-            },
-            {
-                q: "Air and sunlight are classic real-world examples of:",
-                options: ["Economic goods", "Capital goods", "Free goods", "Public infrastructure"],
-                answer: 2
-            },
-            {
-                q: "An economy operating at a point strictly INSIDE its PPC is experiencing:",
-                options: ["Unattainable production", "Productive efficiency", "Resource unemployment or inefficiency", "Maximum potential growth"],
-                answer: 2
+
+        /* ==================== SECTION 3: DRILL CONTROLLERS ==================== */
+        function renderDrill() {
+            const current = drillStatements[drillIdx];
+            document.getElementById('drill-current-num').innerText = drillIdx + 1;
+            document.getElementById('drill-statement-text').innerText = `"${current.text}"`;
+            
+            document.getElementById('drill-feedback').classList.add('hidden');
+            document.getElementById('drill-next-btn').classList.add('hidden');
+            document.getElementById('drill-options').classList.remove('pointer-events-none', 'opacity-50');
+        }
+
+        function submitDrillAnswer(chosenType) {
+            const current = drillStatements[drillIdx];
+            const feedbackEl = document.getElementById('drill-feedback');
+            const optionsEl = document.getElementById('drill-options');
+
+            optionsEl.classList.add('pointer-events-none', 'opacity-50');
+
+            if (chosenType === current.type) {
+                drillScore++;
+                feedbackEl.className = "mt-6 p-4 rounded-xl border border-olive bg-olive-soft text-olive font-medium text-xs sm:text-sm";
+                feedbackEl.innerHTML = `<strong>✓ Correct!</strong> ${current.expl}`;
+            } else {
+                feedbackEl.className = "mt-6 p-4 rounded-xl border border-terracotta bg-terracotta-soft text-terracotta font-medium text-xs sm:text-sm";
+                feedbackEl.innerHTML = `<strong>✗ Incorrect.</strong> ${current.expl}`;
             }
-        ];
 
-        function startQuiz() {
-            const container = document.getElementById('quiz-container');
-            document.getElementById('quiz-results').classList.add('hidden');
-            container.innerHTML = '';
+            document.getElementById('drill-score').innerText = `Score: ${drillScore} / ${drillIdx + 1}`;
+            feedbackEl.classList.remove('hidden');
+            document.getElementById('drill-next-btn').classList.remove('hidden');
+        }
 
-            quizQuestions.forEach((q, idx) => {
-                const qDiv = document.createElement('div');
-                qDiv.className = "bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3";
+        function nextDrillStatement() {
+            drillIdx++;
+            if (drillIdx >= drillStatements.length) {
+                // Completed
+                document.getElementById('drill-statement-text').innerText = `🎉 Drill Complete! Final Score: ${drillScore} / ${drillStatements.length}`;
+                document.getElementById('drill-options').classList.add('hidden');
+                document.getElementById('drill-feedback').classList.add('hidden');
+                document.getElementById('drill-next-btn').innerText = "Restart Drill";
+                document.getElementById('drill-next-btn').onclick = restartDrill;
+                return;
+            }
+            renderDrill();
+        }
+
+        function restartDrill() {
+            drillIdx = 0;
+            drillScore = 0;
+            document.getElementById('drill-score').innerText = "Score: 0 / 0";
+            document.getElementById('drill-options').classList.remove('hidden');
+            document.getElementById('drill-next-btn').innerText = "Next Statement →";
+            document.getElementById('drill-next-btn').onclick = nextDrillStatement;
+            renderDrill();
+        }
+
+
+        /* ==================== SECTION 4: EXAM CONTROLLERS ==================== */
+        function renderExam() {
+            const list = document.getElementById('exam-questions-list');
+            list.innerHTML = '';
+
+            examQuestions.forEach((q, qIdx) => {
+                const card = document.createElement('div');
+                card.className = "bg-paper-card border border-border rounded-2xl p-6 shadow-paper space-y-4";
                 
-                let optionsHtml = '';
-                q.options.forEach((opt, oIdx) => {
-                    optionsHtml += `
-                        <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:bg-slate-50 cursor-pointer text-sm font-medium text-slate-700">
-                            <input type="radio" name="question-${idx}" value="${oIdx}" class="text-blue-600 focus:ring-blue-500">
-                            <span>${opt}</span>
+                let optionsHTML = '';
+                q.opts.forEach((opt, optIdx) => {
+                    optionsHTML += `
+                        <label class="flex items-start gap-3 p-3 rounded-xl border border-border bg-paper cursor-pointer hover:border-ink transition-all">
+                            <input type="radio" name="q-${qIdx}" value="${optIdx}" onchange="selectExamOption(${qIdx}, ${optIdx})" class="mt-0.5 text-terracotta focus:ring-terracotta">
+                            <span class="text-xs sm:text-sm text-ink font-medium">${opt}</span>
                         </label>
                     `;
                 });
 
-                qDiv.innerHTML = `
-                    <h4 class="font-bold text-slate-900 text-base">${idx + 1}. ${q.q}</h4>
-                    <div class="space-y-2">${optionsHtml}</div>
+                card.innerHTML = `
+                    <h3 class="serif-title text-base sm:text-lg font-bold text-ink">${q.q}</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${optionsHTML}
+                    </div>
+                    <div id="exam-expl-${qIdx}" class="hidden p-3 rounded-xl text-xs leading-relaxed border mt-2">
+                        <!-- Explanation injected on grading -->
+                    </div>
                 `;
-                container.appendChild(qDiv);
+                list.appendChild(card);
             });
         }
 
-        function gradeQuiz() {
+        function selectExamOption(qIdx, optIdx) {
+            userExamAnswers[qIdx] = optIdx;
+            const answeredCount = userExamAnswers.filter(a => a !== null).length;
+            document.getElementById('exam-progress-text').innerText = `${answeredCount} / 20`;
+        }
+
+        function gradeExam() {
             let score = 0;
-            quizQuestions.forEach((q, idx) => {
-                const selected = document.querySelector(`input[name="question-${idx}"]:checked`);
-                if (selected && parseInt(selected.value) === q.answer) {
+
+            examQuestions.forEach((q, qIdx) => {
+                const userChoice = userExamAnswers[qIdx];
+                const explEl = document.getElementById(`exam-expl-${qIdx}`);
+                explEl.classList.remove('hidden');
+
+                if (userChoice === q.ans) {
                     score++;
+                    explEl.className = "p-3 rounded-xl text-xs leading-relaxed border border-olive bg-olive-soft text-olive font-medium mt-2";
+                    explEl.innerHTML = `<strong>✓ Correct!</strong> ${q.expl}`;
+                } else {
+                    explEl.className = "p-3 rounded-xl text-xs leading-relaxed border border-terracotta bg-terracotta-soft text-terracotta font-medium mt-2";
+                    explEl.innerHTML = `<strong>✗ Incorrect.</strong> Correct answer: <em>${q.opts[q.ans]}</em>.<br>${q.expl}`;
                 }
             });
 
-            const resDiv = document.getElementById('quiz-results');
-            const scoreText = document.getElementById('quiz-score-text');
-            const feedback = document.getElementById('quiz-feedback');
+            // Show results
+            document.getElementById('submit-exam-btn').classList.add('hidden');
+            const panel = document.getElementById('exam-results-panel');
+            panel.classList.remove('hidden');
 
-            resDiv.classList.remove('hidden');
-            scoreText.innerText = `${score} / ${quizQuestions.length}`;
-            
-            if (score === quizQuestions.length) {
-                feedback.innerText = "Outstanding! You have mastered the vocabulary and concepts for Unit 1.";
-            } else if (score >= quizQuestions.length * 0.7) {
-                feedback.innerText = "Good job! Review the terms you missed using the Flashcards tab.";
-            } else {
-                feedback.innerText = "Keep studying! Spend more time with the Glossary and Flashcards before Wednesday.";
+            document.getElementById('final-score-val').innerText = `${score}/20`;
+
+            // IB Grade mapping
+            let grade = "Level 3";
+            let msg = "Review the vocabulary and PPC diagrams, then try again to boost your understanding!";
+            if (score >= 18) {
+                grade = "Level 7";
+                msg = "Outstanding! You have mastered IB Economics Unit 1. You are 100% prepared to ace your quiz!";
+            } else if (score >= 15) {
+                grade = "Level 6";
+                msg = "Great work! Review the few missed explanations above to lock in a solid Level 7.";
+            } else if (score >= 12) {
+                grade = "Level 5";
+                msg = "Good effort. Re-read the flashcards and practice the PPC written scripts.";
             }
 
-            resDiv.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('final-grade-val').innerText = grade;
+            document.getElementById('final-feedback-msg').innerText = msg;
+
+            window.scrollTo({ top: document.getElementById('exam-footer').offsetTop - 100, behavior: 'smooth' });
         }
+
+        function resetExam() {
+            userExamAnswers = new Array(20).fill(null);
+            document.getElementById('exam-progress-text').innerText = `0 / 20`;
+            document.getElementById('submit-exam-btn').classList.remove('hidden');
+            document.getElementById('exam-results-panel').classList.add('hidden');
+            renderExam();
+            window.scrollTo({ top: document.getElementById('section-exam').offsetTop - 80, behavior: 'smooth' });
+        }
+
+
+        /* ==================== INITIALIZATION ==================== */
+        window.onload = function() {
+            renderDictionary();
+            loadPPCScenario(0);
+            renderDrill();
+            renderExam();
+        };
     </script>
 </body>
 </html>

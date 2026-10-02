@@ -1,512 +1,542 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thème 1 Contexte 1 - Vocabulaire interactif</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>Advanced French Pronouns Mastery</title>
     <style>
-        .perspective-1000 {
-            perspective: 1000px;
+        :root {
+            --bg-color: #F9F8F6;
+            --text-main: #2D2B2A;
+            --text-muted: #6B6967;
+            --border-light: #E5E3DF;
+            --hover-bg: #F2EFEB;
+            
+            --correct-bg: #edf7ed;
+            --correct-border: #c8e6c9;
+            --correct-text: #1e4620;
+            
+            --incorrect-bg: #fdf0f0;
+            --incorrect-border: #fad2d2;
+            --incorrect-text: #5c1a1a;
+            
+            --btn-primary: #3F3D3C;
+            --btn-primary-hover: #2D2B2A;
+            
+            --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
         }
-        .transform-style-3d {
-            transform-style: preserve-3d;
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        .backface-hidden {
-            backface-visibility: hidden;
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            padding: 3rem 1rem;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
-        .rotate-y-180 {
-            transform: rotateY(180deg);
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 2px;
+            background-color: var(--border-light);
+            border-radius: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--text-main);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .question-text {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-main);
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
+
+        .question-text strong {
+            font-weight: 600;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .option {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 1.125rem 1.25rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover:not(:disabled) {
+            background-color: var(--hover-bg);
+            border-color: #d4d2ce;
+        }
+
+        .option.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+        }
+
+        .option.incorrect {
+            background-color: var(--incorrect-bg);
+            border-color: var(--incorrect-border);
+            color: var(--incorrect-text);
+        }
+
+        .option:disabled {
+            cursor: default;
+        }
+
+        .explanation {
+            display: none;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explanation h4 {
+            font-family: var(--font-serif);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .explanation p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .next-btn-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-primary {
+            background-color: var(--btn-primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 0.875rem 1.75rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--btn-primary-hover);
+        }
+
+        #results-screen {
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .score-heading {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .score-message {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
         }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<body>
 
-    <header class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 sm:py-5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
-                    <i class="fa-solid fa-graduation-cap text-2xl text-indigo-200"></i>
+    <div class="container">
+        <div id="quiz-screen">
+            <div class="header">
+                <div class="progress-text" id="progress-text">Question 1 of 30</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
                 </div>
-                <div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-200">Vocabulaire Français</span>
-                    <h1 class="text-xl sm:text-2xl font-black">Thème 1 - Contexte 1</h1>
-                </div>
+                <div class="progress-text" style="float: right; margin-top: -3.5rem;" id="score-text">Score: 0</div>
             </div>
 
-            <!-- Header Controls -->
-            <div class="flex flex-wrap items-center gap-2 sm:gap-3 w-full md:w-auto justify-center">
-                <!-- Language Selector Dropdown -->
-                <div class="flex items-center bg-indigo-700/70 border border-indigo-400/30 rounded-lg px-2.5 py-1.5 shadow-inner">
-                    <i class="fa-solid fa-language mr-2 text-indigo-200 text-sm"></i>
-                    <label for="langSelect" class="sr-only">Langue des définitions</label>
-                    <select id="langSelect" onchange="changeLanguageSetting(this.value)" class="bg-transparent text-white text-xs sm:text-sm font-medium focus:outline-none cursor-pointer pr-1">
-                        <option value="fr" class="text-slate-800">Définitions : Français</option>
-                        <option value="en" class="text-slate-800">Definitions: English</option>
-                        <option value="both" selected class="text-slate-800">Les deux / Both (FR + EN)</option>
-                    </select>
-                </div>
+            <div class="question-text" id="question-text">Loading...</div>
+            
+            <div class="options-list" id="options-list"></div>
 
-                <!-- Mode Toggle Buttons -->
-                <div class="flex bg-indigo-800/80 p-1 rounded-lg border border-indigo-500/30 shadow-inner">
-                    <button id="viewCardsBtn" onclick="switchView('cards')" class="px-3.5 py-1.5 rounded-md font-semibold text-xs sm:text-sm transition-all bg-white text-indigo-700 shadow-sm">
-                        <i class="fa-solid fa-layer-group mr-1.5"></i>Flashcards
-                    </button>
-                    <button id="viewListBtn" onclick="switchView('list')" class="px-3.5 py-1.5 rounded-md font-semibold text-xs sm:text-sm transition-all text-indigo-200 hover:text-white">
-                        <i class="fa-solid fa-table-list mr-1.5"></i>Liste
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto px-4 py-6 sm:py-8 flex-grow w-full">
-
-        <!-- Universal Filter and Search Header -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="relative w-full sm:w-80">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                <input type="text" id="searchInput" onkeyup="filterVocab()" placeholder="Rechercher (mot, FR, EN)..." 
-                    class="w-full pl-10 pr-8 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-slate-50/50 transition">
-                <button onclick="clearSearch()" id="clearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-                    <i class="fa-solid fa-xmark text-xs"></i>
-                </button>
+            <div class="explanation" id="explanation">
+                <h4>Analysis</h4>
+                <p id="explanation-text"></p>
             </div>
 
-            <!-- Quick Filter Chips -->
-            <div class="flex items-center gap-2 w-full sm:w-auto justify-end overflow-x-auto pb-1 sm:pb-0">
-                <button id="filterAll" onclick="setFilter('all')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-100 text-indigo-700 border border-indigo-200">
-                    Tous (<span id="countAll">24</span>)
-                </button>
-                <button id="filterStarred" onclick="setFilter('starred')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200">
-                    <i class="fa-solid fa-star text-amber-400 mr-1"></i>Favoris (<span id="countStarred">0</span>)
-                </button>
+            <div class="next-btn-container">
+                <button class="btn-primary" id="next-btn" onclick="nextQuestion()">Continue</button>
             </div>
         </div>
 
-        <div id="cardsView" class="flex flex-col items-center justify-center min-h-[480px]">
-            <!-- Flashcard Control Bar -->
-            <div class="w-full max-w-xl mb-4 flex justify-between items-center text-xs sm:text-sm font-semibold text-slate-500 px-1">
-                <span id="cardProgress" class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full border border-indigo-100">
-                    Carte 1 sur 24
-                </span>
-                <div class="flex items-center gap-3">
-                    <button onclick="toggleStarCurrent()" id="cardStarBtn" class="p-2 rounded-lg bg-white border border-slate-200 shadow-sm text-slate-400 hover:text-amber-400 transition" title="Marquer comme favori">
-                        <i class="fa-solid fa-star text-base"></i>
-                    </button>
-                    <button onclick="shuffleCards()" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-sm text-slate-600 hover:text-indigo-600 hover:border-indigo-200 transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-shuffle text-xs"></i> Mélanger
-                    </button>
-                </div>
-            </div>
-
-            <!-- Interactive 3D Flip Card -->
-            <div class="w-full max-w-xl h-80 sm:h-96 perspective-1000 cursor-pointer select-none" onclick="flipCard()">
-                <div id="flashcard" class="relative w-full h-full duration-500 transform-style-3d transition-transform shadow-xl rounded-3xl">
-                    
-                    <!-- Card Front (French Term) -->
-                    <div class="absolute w-full h-full backface-hidden bg-white border-2 border-indigo-100 rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center">
-                        <div class="w-full flex justify-between items-center">
-                            <span class="text-xs font-bold text-indigo-500 uppercase tracking-widest bg-indigo-50 px-2.5 py-1 rounded-md">Terme en français</span>
-                            <i id="frontStar" class="fa-solid fa-star text-amber-400 text-lg opacity-0 transition-opacity"></i>
-                        </div>
-                        
-                        <div class="my-auto flex flex-col items-center gap-3">
-                            <h2 id="cardFront" class="text-2xl sm:text-4xl font-extrabold text-slate-800 leading-tight">--</h2>
-                            <button onclick="event.stopPropagation(); speakText(document.getElementById('cardFront').innerText)" 
-                                    class="p-3 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition shadow-sm mt-2" title="Écouter la prononciation">
-                                <i class="fa-solid fa-volume-high text-xl"></i>
-                            </button>
-                        </div>
-
-                        <div class="text-xs text-slate-400 flex items-center gap-1 font-medium">
-                            <i class="fa-solid fa-rotate text-indigo-400"></i> Cliquez ou appuyez sur [Espace] pour retourner
-                        </div>
-                    </div>
-
-                    <!-- Card Back (Definitions) -->
-                    <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-indigo-600 to-indigo-800 text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center">
-                        <div class="w-full flex justify-between items-center">
-                            <span class="text-xs font-bold text-indigo-200 uppercase tracking-widest bg-indigo-900/40 px-2.5 py-1 rounded-md border border-indigo-400/20">Définition / Meaning</span>
-                            <i id="backStar" class="fa-solid fa-star text-amber-300 text-lg opacity-0 transition-opacity"></i>
-                        </div>
-                        
-                        <div class="my-auto space-y-4 max-h-[220px] overflow-y-auto px-2">
-                            <!-- French Def Container -->
-                            <div id="cardBackFrContainer" class="space-y-1">
-                                <span class="text-[10px] uppercase font-bold text-indigo-300 tracking-wider">Français</span>
-                                <p id="cardBackFr" class="text-lg sm:text-xl font-medium leading-relaxed">--</p>
-                            </div>
-
-                            <hr id="cardBackDivider" class="border-indigo-400/30 my-2">
-
-                            <!-- English Def Container -->
-                            <div id="cardBackEnContainer" class="space-y-1">
-                                <span class="text-[10px] uppercase font-bold text-indigo-300 tracking-wider">English</span>
-                                <p id="cardBackEn" class="text-base sm:text-lg font-normal text-indigo-100 italic">--</p>
-                            </div>
-                        </div>
-
-                        <div class="text-xs text-indigo-200 flex items-center gap-1 font-medium">
-                            <i class="fa-solid fa-rotate"></i> Cliquez pour revenir au terme
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Navigation Controls -->
-            <div class="flex items-center gap-6 mt-6 sm:mt-8">
-                <button onclick="prevCard()" class="p-4 rounded-2xl bg-white border border-slate-200 shadow-md hover:bg-slate-50 text-slate-700 hover:text-indigo-600 transition flex items-center justify-center w-14 h-14" title="Précédent (Flèche Gauche)">
-                    <i class="fa-solid fa-arrow-left text-xl"></i>
-                </button>
-                <button onclick="nextCard()" class="p-4 rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 transition flex items-center justify-center w-14 h-14" title="Suivant (Flèche Droite)">
-                    <i class="fa-solid fa-arrow-right text-xl"></i>
-                </button>
-            </div>
+        <div id="results-screen">
+            <h1 class="score-heading" id="final-score-heading">0/30</h1>
+            <p class="score-message" id="score-message">Assessment complete.</p>
+            <button class="btn-primary" style="display: inline-block;" onclick="restartQuiz()">Restart Assessment</button>
         </div>
-
-        <div id="listView" class="hidden space-y-4">
-            <div id="vocabGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Vocab Item Cards injected via JS -->
-            </div>
-            <div id="emptyListNotice" class="hidden py-16 text-center text-slate-400">
-                <i class="fa-solid fa-folder-open text-4xl mb-3 block"></i>
-                <p class="font-medium text-base">Aucun terme ne correspond à vos critères.</p>
-            </div>
-        </div>
-
-    </main>
-
-    <footer class="bg-white border-t border-slate-200 py-4 mt-auto text-center text-xs text-slate-400">
-        Thème 1 Contexte 1 — Module d'apprentissage de vocabulaire
-    </footer>
+    </div>
 
     <script>
-        // Vocabulary Dataset with French and English definitions
-        const vocabularyData = [
-            { id: 1, term: "l'abri (m.)", defFr: "refuge, protection", defEn: "shelter, refuge" },
-            { id: 2, term: "affronter", defFr: "faire face à", defEn: "to face, to confront" },
-            { id: 3, term: "agir", defFr: "faire quelque chose", defEn: "to act, to take action" },
-            { id: 4, term: "au fil de", defFr: "au cours de", defEn: "over time, as time goes by / over the course of" },
-            { id: 5, term: "le bénévolat", defFr: "volontariat, activité non rémunérée", defEn: "volunteering, unpaid work" },
-            { id: 6, term: "bosser (fam.)", defFr: "travailler", defEn: "to work (informal/slang)" },
-            { id: 7, term: "caritatif, caritative", defFr: "qui concerne la vertu de charité", defEn: "charitable" },
-            { id: 8, term: "consacrer", defFr: "dédier", defEn: "to dedicate, to devote" },
-            { id: 9, term: "déceler", defFr: "identifier", defEn: "to detect, to identify / discover" },
-            { id: 10, term: "désabusé(e)", defFr: "désenchanté(e)", defEn: "disillusioned, disenchanted" },
-            { id: 11, term: "l'encadrement (m.)", defFr: "support qui aide un individu", defEn: "supervision, support, framework" },
-            { id: 12, term: "engagé(e)", defFr: "qui prend position pour des problèmes politiques ou sociaux", defEn: "committed, politically/socially engaged" },
-            { id: 13, term: "l'engagement (m.)", defFr: "le fait de s'impliquer activement dans une cause ou un projet", defEn: "commitment, involvement" },
-            { id: 14, term: "l'hectare (m.)", defFr: "mesure métrique qui équivaut à peu près à 2,4 acres", defEn: "hectare (metric area unit ~2.47 acres)" },
-            { id: 15, term: "le / la pensionnaire", defFr: "personne qui vit à l'école", defEn: "boarder, resident" },
-            { id: 16, term: "le levier", defFr: "facteur important", defEn: "lever, key factor, catalyst" },
-            { id: 17, term: "le microcosme", defFr: "milieu social avec ses propres règles, petit univers", defEn: "microcosm, small world" },
-            { id: 18, term: "prendre du recul", defFr: "s'arrêter pour considérer quelque chose", defEn: "to step back, to gain perspective" },
-            { id: 19, term: "le réalisateur / la réalisatrice", defFr: "personne qui produit des films", defEn: "director, filmmaker" },
-            { id: 20, term: "un renseignement", defFr: "une indication, une information", defEn: "piece of information, detail" },
-            { id: 21, term: "le sens", defFr: "direction, orientation, signification", defEn: "meaning, direction, sense" },
-            { id: 22, term: "singulier, singulière", defFr: "différent(e), unique", defEn: "singular, unique, peculiar" },
-            { id: 23, term: "la solidarité", defFr: "rapport existant entre des personnes qui, ayant une communauté d'intérêts, sont liées les unes aux autres", defEn: "solidarity, togetherness" },
-            { id: 24, term: "un sondage", defFr: "une enquête ; une interrogation d'un petit groupe de personnes pour connaître l'opinion de toute la population", defEn: "survey, poll" }
+        const quizData = [
+            {
+                q: "Translate: <strong>'Give it to me!'</strong> (le livre)",
+                options: ["Me le donne !", "Donne-me-le !", "Donne-le-moi !", "Donne-moi-le !"],
+                correct: 2,
+                exp: "In the affirmative imperative, pronouns follow the verb connected by hyphens. The direct object (le/la/les) precedes the indirect object (moi/toi/lui/leur). Thus: Donne + le + moi."
+            },
+            {
+                q: "Translate: <strong>'Do not give it to him!'</strong> (le livre)",
+                options: ["Ne le lui donne pas !", "Ne lui le donne pas !", "Ne donne-le-lui pas !", "Ne le donne lui pas !"],
+                correct: 0,
+                exp: "In the negative imperative, pronouns precede the verb just like in normal present tense. The order dictates that 3rd person direct objects (le/la/les) precede 3rd person indirect objects (lui/leur). -> Ne + le + lui + donne + pas."
+            },
+            {
+                q: "A-t-il acheté des pommes ? — Oui, il <strong>___</strong> a acheté.",
+                options: ["en", "les", "y", "des"],
+                correct: 0,
+                exp: "'Des pommes' is a partitive noun phrase (some apples). It must be replaced by the pronoun 'en'."
+            },
+            {
+                q: "Il a acheté des pommes hier. — Oui, il en a <strong>___</strong>.",
+                options: ["achetés", "achetée", "achetées", "acheté"],
+                correct: 3,
+                exp: "Crucial rule: The past participle NEVER agrees with the pronoun 'en', even though it acts as a preceding direct object. The participle remains singular masculine: 'acheté'."
+            },
+            {
+                q: "Tu te souviens <strong>de cette réunion</strong> ? — Oui, je <strong>___</strong>.",
+                options: ["m'y souviens", "me la souviens", "m'en souviens", "me souviens d'elle"],
+                correct: 2,
+                exp: "The verb is 'se souvenir de'. Since it is followed by an inanimate object ('de cette réunion'), it is replaced by 'en'. The reflexive pronoun precedes 'en' -> je m'en souviens."
+            },
+            {
+                q: "Tu penses souvent <strong>à ton grand-père</strong> ? — Oui, je pense souvent <strong>___</strong>.",
+                options: ["à lui", "y", "lui", "à le"],
+                correct: 0,
+                exp: "With certain verbs like 'penser à', when referring to a PERSON, you cannot use the pronoun 'y' or 'lui' before the verb. You must keep the preposition and use a stress pronoun after the verb: 'à lui'."
+            },
+            {
+                q: "Tu penses souvent <strong>à ton avenir</strong> ? — Oui, j'<strong>___</strong> pense souvent.",
+                options: ["y", "en", "lui", "à lui"],
+                correct: 0,
+                exp: "Unlike the previous question, 'ton avenir' is an inanimate concept. Verbs with 'à' + inanimate thing/idea are replaced by the pronoun 'y'."
+            },
+            {
+                q: "Que penses-tu <strong>de ce film</strong> ? — Qu'est-ce que tu <strong>___</strong> penses ?",
+                options: ["y", "en", "le", "lui"],
+                correct: 1,
+                exp: "'Penser de' means 'to have an opinion about'. Since it is constructed with 'de', it is replaced by the pronoun 'en'."
+            },
+            {
+                q: "Il y a des chaises dans le jardin ? — Oui, il <strong>___</strong> a.",
+                options: ["y les", "en y", "y en", "les y"],
+                correct: 2,
+                exp: "When combining 'y' and 'en', 'y' ALWAYS precedes 'en'. 'Il y en a' translates to 'There are some (there)'."
+            },
+            {
+                q: "Translate: <strong>'Go there!'</strong> (tu form of 'aller')",
+                options: ["Va-y !", "Vas-y !", "Va-y-toi !", "Vaz-y !"],
+                correct: 1,
+                exp: "In the affirmative imperative for 'tu', -er verbs normally drop the final 's' (Va !). However, when followed by 'y' or 'en', the 's' is added back for pronunciation (liaison): 'Vas-y !'."
+            },
+
+            {
+                q: "Translate: <strong>'Buy some!'</strong> (tu form of 'acheter' + fruits)",
+                options: ["Achète-en !", "Achètes-en !", "Achète-les !", "Achètes-les !"],
+                correct: 1,
+                exp: "Similar to 'vas-y', the -er verb 'acheter' adds an 's' in the 'tu' imperative form when immediately followed by the pronoun 'en' for liaison: 'Achètes-en !'."
+            },
+            {
+                q: "Tu vas montrer <strong>les photos</strong> <strong>à tes amis</strong> ? — Oui, je vais <strong>___</strong> montrer.",
+                options: ["leur les", "les leur", "les y", "leur en"],
+                correct: 1,
+                exp: "Double pronoun order: 3rd person direct objects (le, la, les) precede 3rd person indirect objects (lui, leur). Furthermore, they are placed immediately before the infinitive 'montrer'."
+            },
+            {
+                q: "Il t'a rendu <strong>tes clés</strong> ? — Oui, il <strong>___</strong>.",
+                options: ["me les a rendu", "les m'a rendu", "me les a rendues", "les m'a rendues"],
+                correct: 2,
+                exp: "1) 'me' precedes 'les'. 2) Because the direct object ('les' replacing feminine plural 'clés') precedes the auxiliary 'avoir' in passé composé, the past participle MUST agree: 'rendues'."
+            },
+            {
+                q: "Il m'a conseillé <strong>de ne pas aller à cette fête</strong>. -> Il m'a conseillé de ne pas <strong>___</strong> aller.",
+                options: ["y", "en", "l'", "lui"],
+                correct: 0,
+                exp: "With an infinitive, the negative 'ne pas' stays together before the pronoun and the verb. 'À cette fête' is a place, replaced by 'y' -> 'de ne pas y aller'."
+            },
+            {
+                q: "Elle a fait réparer <strong>la voiture</strong>. -> Elle <strong>___</strong> a fait réparer.",
+                options: ["l'", "la", "lui", "y"],
+                correct: 0,
+                exp: "In the causative construction (faire + infinitive), the object pronoun is placed BEFORE 'faire', not before the infinitive -> 'Elle l'a fait réparer'."
+            },
+            {
+                q: "Elle a fait réparer la voiture. -> Elle l'a <strong>___</strong> réparer.",
+                options: ["faite", "fait", "faites", "fais"],
+                correct: 1,
+                exp: "An absolute rule of French grammar: the past participle of 'faire' (fait) NEVER agrees when it is followed by an infinitive, regardless of preceding direct objects."
+            },
+            {
+                q: "Vous venez <strong>de la piscine</strong> ? — Oui, nous <strong>___</strong> venons.",
+                options: ["y", "la", "en", "de là"],
+                correct: 2,
+                exp: "'Venir de' indicates origin. Places introduced by 'de' (coming from) are replaced by 'en', while places introduced by 'à' (going to) are replaced by 'y'."
+            },
+            {
+                q: "Il faut que tu <strong>me</strong> montres <strong>ce document</strong>. -> Il faut que tu <strong>___</strong> montres.",
+                options: ["le me", "me le", "lui le", "le lui"],
+                correct: 1,
+                exp: "Pronouns of the 1st and 2nd person (me, te, nous, vous) ALWAYS precede direct object pronouns (le, la, les). Therefore: 'me le'."
+            },
+            {
+                q: "He didn't explain it to me. -> Il ne <strong>___</strong> a pas expliqué.",
+                options: ["me l'", "le m'", "m'y", "me lui"],
+                correct: 0,
+                exp: "Order: 'me' + 'le' (which becomes l' before a vowel). The negation surrounds the pronouns + auxiliary verb -> 'Il ne me l'a pas expliqué'."
+            },
+            {
+                q: "Je ne veux pas prêter <strong>ma voiture</strong> <strong>à Luc</strong>. -> Je ne veux pas <strong>___</strong> prêter.",
+                options: ["la lui", "lui la", "le lui", "lui le"],
+                correct: 0,
+                exp: "Placement is before the infinitive 'prêter'. Order is 3rd person COD (la) before 3rd person COI (lui) -> 'la lui'."
+            },
+
+            {
+                q: "Tu as combien de frères ? — J'<strong>___</strong> ai deux.",
+                options: ["y", "les", "en", "eux"],
+                correct: 2,
+                exp: "Whenever a sentence ends with a specific number or quantity (deux, plusieurs, beaucoup), the noun being counted MUST be represented by the pronoun 'en'."
+            },
+            {
+                q: "Translate: <strong>'There are some there.'</strong>",
+                options: ["Il y a en.", "Il en y a.", "Il y en a.", "Il y a d'en."],
+                correct: 2,
+                exp: "The expression is 'il y a'. When adding 'en' to represent 'some', 'y' always precedes 'en' -> 'Il y en a'."
+            },
+            {
+                q: "Je me fie <strong>à mes amis</strong>. -> Je me fie <strong>___</strong>.",
+                options: ["à eux", "leur", "les", "y"],
+                correct: 0,
+                exp: "'Se fier à' (to trust) is a reflexive verb. With reflexive verbs + à + people, you cannot use 'leur'. You must use a stress pronoun: 'à eux'."
+            },
+            {
+                q: "Elle s'est habituée <strong>à la vie parisienne</strong>. -> Elle <strong>___</strong> est habituée.",
+                options: ["s'en", "s'y", "s'la", "se l'"],
+                correct: 1,
+                exp: "'S'habituer à' + inanimate concept ('la vie parisienne') requires the pronoun 'y'. It is placed before the auxiliary verb in passé composé: 's'y est'."
+            },
+            {
+                q: "A-t-elle offert <strong>du thé</strong> <strong>aux invités</strong> ? — Oui, elle <strong>___</strong> a offert.",
+                options: ["le leur", "leur en", "en leur", "les y"],
+                correct: 1,
+                exp: "'Du thé' (partitive) becomes 'en'. 'Aux invités' (indirect people) becomes 'leur'. Rule: 'leur' always precedes 'en' -> 'leur en'."
+            },
+            {
+                q: "Il a refusé <strong>de nous aider</strong>. -> Il <strong>___</strong> a refusé.",
+                options: ["en", "y", "l'", "le nous"],
+                correct: 2,
+                exp: "Highly advanced: Even though 'refuser' takes 'de' before an infinitive, a whole clause acting as a direct object is replaced by the neutral pronoun 'le' (l'), not 'en'."
+            },
+            {
+                q: "Translate: <strong>'Give me some!'</strong>",
+                options: ["Donne-me-en !", "Donne-m'en !", "Me donnes-en !", "Donnes-en-moi !"],
+                correct: 1,
+                exp: "Affirmative imperative requires pronouns after the verb. 'Moi' + 'en' elides to 'm'en'. -> 'Donne-m'en !'."
+            },
+            {
+                q: "Il faut que je parle <strong>de mon problème</strong> <strong>au médecin</strong>. -> Il faut que je <strong>___</strong> parle.",
+                options: ["le lui", "lui en", "en lui", "lui le"],
+                correct: 1,
+                exp: "'De mon problème' = 'en'. 'Au médecin' = 'lui'. Indirect objects (lui/leur) ALWAYS precede 'en'. -> 'lui en'."
+            },
+            {
+                q: "Translate: <strong>'Take us there!'</strong> (Emmener / nous / là-bas)",
+                options: ["Emmène-nous-y !", "Emmène-y-nous !", "Nous y emmène !", "Emmène-nous-en !"],
+                correct: 0,
+                exp: "Affirmative imperative: Pronouns follow the verb. Direct/Indirect object pronouns (nous) precede 'y'. -> 'Emmène-nous-y !'."
+            },
+            {
+                q: "As-tu trouvé <strong>de bonnes fraises</strong> au marché ? — Oui, j'<strong>___</strong> ai trouvé.",
+                options: ["y en", "en y", "les y", "y les"],
+                correct: 0,
+                exp: "'Au marché' = y. 'De bonnes fraises' = en. 'Y' precedes 'en'. And remember, the past participle 'trouvé' does NOT agree with 'en'."
+            }
         ];
 
-        // State variables
-        let activeLanguageSetting = 'both'; // 'fr', 'en', 'both'
-        let currentFilter = 'all'; // 'all', 'starred'
-        let starredIds = new Set();
-        let filteredVocabulary = [...vocabularyData];
-        let currentCardIndex = 0;
-        let isFlipped = false;
+        let currentIdx = 0;
+        let score = 0;
+        let hasAnswered = false;
 
-        // Change definition language display setting
-        function changeLanguageSetting(newLang) {
-            activeLanguageSetting = newLang;
-            renderList(filteredVocabulary);
-            updateCardDisplay();
-        }
+        const elements = {
+            progressText: document.getElementById('progress-text'),
+            progressBar: document.getElementById('progress-bar'),
+            scoreText: document.getElementById('score-text'),
+            questionText: document.getElementById('question-text'),
+            optionsList: document.getElementById('options-list'),
+            explanation: document.getElementById('explanation'),
+            explanationText: document.getElementById('explanation-text'),
+            nextBtn: document.getElementById('next-btn'),
+            quizScreen: document.getElementById('quiz-screen'),
+            resultsScreen: document.getElementById('results-screen'),
+            finalScoreHeading: document.getElementById('final-score-heading'),
+            scoreMessage: document.getElementById('score-message')
+        };
 
-        // Toggle Favorites/Starred status
-        function toggleStar(id, event) {
-            if (event) event.stopPropagation();
+        function loadQuestion() {
+            hasAnswered = false;
+            const q = quizData[currentIdx];
             
-            if (starredIds.has(id)) {
-                starredIds.delete(id);
-            } else {
-                starredIds.add(id);
-            }
+            elements.progressText.textContent = `Question ${currentIdx + 1} of ${quizData.length}`;
+            elements.scoreText.textContent = `Score: ${score}`;
             
-            updateCounters();
+            const progressPercentage = (currentIdx / quizData.length) * 100;
+            elements.progressBar.style.width = `${progressPercentage}%`;
+
+            elements.questionText.innerHTML = q.q;
             
-            if (currentFilter === 'starred') {
-                applyFiltersAndSearch();
-            } else {
-                renderList(filteredVocabulary);
-                updateCardDisplay();
-            }
-        }
+            elements.explanation.style.display = 'none';
+            elements.nextBtn.style.display = 'none';
+            elements.optionsList.innerHTML = '';
 
-        function toggleStarCurrent() {
-            if (filteredVocabulary.length > 0) {
-                const currentItem = filteredVocabulary[currentCardIndex];
-                toggleStar(currentItem.id);
-            }
-        }
-
-        // Update counter UI
-        function updateCounters() {
-            document.getElementById('countAll').innerText = vocabularyData.length;
-            document.getElementById('countStarred').innerText = starredIds.size;
-        }
-
-        // Filter tabs (All vs Starred)
-        function setFilter(filterType) {
-            currentFilter = filterType;
-            
-            const btnAll = document.getElementById('filterAll');
-            const btnStarred = document.getElementById('filterStarred');
-
-            if (filterType === 'all') {
-                btnAll.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-100 text-indigo-700 border border-indigo-200";
-                btnStarred.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200";
-            } else {
-                btnStarred.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition bg-amber-100 text-amber-800 border border-amber-200";
-                btnAll.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200";
-            }
-
-            applyFiltersAndSearch();
-        }
-
-        // Apply Search and Filters together
-        function applyFiltersAndSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const clearBtn = document.getElementById('clearSearchBtn');
-            
-            if (query.length > 0) {
-                clearBtn.classList.remove('hidden');
-            } else {
-                clearBtn.classList.add('hidden');
-            }
-
-            filteredVocabulary = vocabularyData.filter(item => {
-                const matchesFilter = (currentFilter === 'all') || (currentFilter === 'starred' && starredIds.has(item.id));
-                const matchesSearch = item.term.toLowerCase().includes(query) ||
-                                      item.defFr.toLowerCase().includes(query) ||
-                                      item.defEn.toLowerCase().includes(query);
-                return matchesFilter && matchesSearch;
-            });
-
-            currentCardIndex = 0;
-            renderList(filteredVocabulary);
-            updateCardDisplay();
-        }
-
-        function filterVocab() {
-            applyFiltersAndSearch();
-        }
-
-        function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            applyFiltersAndSearch();
-        }
-
-        // Render vocabulary list table/grid view
-        function renderList(items) {
-            const grid = document.getElementById('vocabGrid');
-            const emptyNotice = document.getElementById('emptyListNotice');
-            grid.innerHTML = '';
-
-            if (items.length === 0) {
-                emptyNotice.classList.remove('hidden');
-                return;
-            } else {
-                emptyNotice.classList.add('hidden');
-            }
-
-            items.forEach(item => {
-                const isStarred = starredIds.has(item.id);
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col justify-between relative group";
-                
-                // Content construction based on active language setting
-                let defHTML = '';
-                if (activeLanguageSetting === 'fr' || activeLanguageSetting === 'both') {
-                    defHTML += `<p class="text-slate-700 text-sm font-medium leading-relaxed">${item.defFr}</p>`;
-                }
-                if (activeLanguageSetting === 'both' && item.defEn) {
-                    defHTML += `<p class="text-indigo-600/80 text-xs italic mt-1.5 pt-1.5 border-t border-slate-100">${item.defEn}</p>`;
-                } else if (activeLanguageSetting === 'en') {
-                    defHTML += `<p class="text-indigo-700 text-sm font-normal italic">${item.defEn}</p>`;
-                }
-
-                card.innerHTML = `
-                    <div>
-                        <div class="flex justify-between items-start gap-2 mb-2">
-                            <div class="flex items-center gap-2">
-                                <h3 class="font-bold text-lg text-slate-800 group-hover:text-indigo-600 transition">${item.term}</h3>
-                                <button onclick="speakText('${item.term.replace(/'/g, "\\'")}')" class="text-slate-300 hover:text-indigo-600 transition p-1" title="Écouter">
-                                    <i class="fa-solid fa-volume-high text-sm"></i>
-                                </button>
-                            </div>
-                            <button onclick="toggleStar(${item.id}, event)" class="p-1 text-slate-300 hover:text-amber-400 transition">
-                                <i class="fa-solid fa-star ${isStarred ? 'text-amber-400' : ''}"></i>
-                            </button>
-                        </div>
-                        <div class="mt-1">${defHTML}</div>
-                    </div>
-                `;
-                grid.appendChild(card);
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.innerHTML = opt;
+                btn.onclick = () => selectOption(idx, btn);
+                elements.optionsList.appendChild(btn);
             });
         }
 
-        // Update Flashcard UI display
-        function updateCardDisplay() {
-            const cardElement = document.getElementById('flashcard');
-            const cardFront = document.getElementById('cardFront');
-            const cardBackFr = document.getElementById('cardBackFr');
-            const cardBackEn = document.getElementById('cardBackEn');
-            const cardBackFrContainer = document.getElementById('cardBackFrContainer');
-            document.getElementById('cardBackEnContainer');
-            const cardBackDivider = document.getElementById('cardBackDivider');
-            const progress = document.getElementById('cardProgress');
-            const cardStarBtn = document.getElementById('cardStarBtn');
-            const frontStar = document.getElementById('frontStar');
-            const backStar = document.getElementById('backStar');
+        function selectOption(selectedIndex, btnElement) {
+            if (hasAnswered) return;
+            hasAnswered = true;
 
-            if (filteredVocabulary.length === 0) {
-                cardFront.innerText = "Aucun terme";
-                cardBackFr.innerText = "Modifiez vos filtres de recherche";
-                cardBackEn.innerText = "Adjust search filters";
-                progress.innerText = "0 sur 0";
-                return;
-            }
+            const q = quizData[currentIdx];
+            const allBtns = elements.optionsList.querySelectorAll('.option');
 
-            const current = filteredVocabulary[currentCardIndex];
-            cardFront.innerText = current.term;
-            cardBackFr.innerText = current.defFr;
-            cardBackEn.innerText = current.defEn;
+            allBtns.forEach(btn => btn.disabled = true);
 
-            // Adjust card back according to definition language setting
-            if (activeLanguageSetting === 'fr') {
-                cardBackFrContainer.classList.remove('hidden');
-                document.getElementById('cardBackEnContainer').classList.add('hidden');
-                cardBackDivider.classList.add('hidden');
-            } else if (activeLanguageSetting === 'en') {
-                cardBackFrContainer.classList.add('hidden');
-                document.getElementById('cardBackEnContainer').classList.remove('hidden');
-                cardBackDivider.classList.add('hidden');
-            } else { // 'both'
-                cardBackFrContainer.classList.remove('hidden');
-                document.getElementById('cardBackEnContainer').classList.remove('hidden');
-                cardBackDivider.classList.remove('hidden');
-            }
-
-            progress.innerText = `Carte ${currentCardIndex + 1} sur ${filteredVocabulary.length}`;
-
-            // Star indicator updates
-            const isStarred = starredIds.has(current.id);
-            if (isStarred) {
-                cardStarBtn.className = "p-2 rounded-lg bg-amber-50 border border-amber-200 shadow-sm text-amber-500 transition";
-                frontStar.style.opacity = "1";
-                backStar.style.opacity = "1";
+            if (selectedIndex === q.correct) {
+                btnElement.classList.add('correct');
+                score++;
+                elements.scoreText.textContent = `Score: ${score}`;
             } else {
-                cardStarBtn.className = "p-2 rounded-lg bg-white border border-slate-200 shadow-sm text-slate-400 hover:text-amber-400 transition";
-                frontStar.style.opacity = "0";
-                backStar.style.opacity = "0";
+                btnElement.classList.add('incorrect');
+                allBtns[q.correct].classList.add('correct');
             }
 
-            // Reset card flip state smoothly
-            if (isFlipped) {
-                cardElement.classList.remove('rotate-y-180');
-                isFlipped = false;
-            }
-        }
+            elements.explanationText.innerHTML = q.exp;
+            elements.explanation.style.display = 'block';
 
-        function flipCard() {
-            if (filteredVocabulary.length === 0) return;
-            const cardElement = document.getElementById('flashcard');
-            isFlipped = !isFlipped;
-            if (isFlipped) {
-                cardElement.classList.add('rotate-y-180');
+            if (currentIdx === quizData.length - 1) {
+                elements.nextBtn.textContent = "Complete Assessment";
             } else {
-                cardElement.classList.remove('rotate-y-180');
+                elements.nextBtn.textContent = "Continue";
             }
+            elements.nextBtn.style.display = 'inline-block';
         }
 
-        function nextCard() {
-            if (filteredVocabulary.length === 0) return;
-            currentCardIndex = (currentCardIndex + 1) % filteredVocabulary.length;
-            updateCardDisplay();
-        }
-
-        function prevCard() {
-            if (filteredVocabulary.length === 0) return;
-            currentCardIndex = (currentCardIndex - 1 + filteredVocabulary.length) % filteredVocabulary.length;
-            updateCardDisplay();
-        }
-
-        function shuffleCards() {
-            if (filteredVocabulary.length === 0) return;
-            filteredVocabulary.sort(() => Math.random() - 0.5);
-            currentCardIndex = 0;
-            updateCardDisplay();
-        }
-
-        // Web Speech API Pronunciation
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'fr-FR';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        // View Mode Switcher
-        function switchView(mode) {
-            const listEl = document.getElementById('listView');
-            const cardsEl = document.getElementById('cardsView');
-            const listBtn = document.getElementById('viewListBtn');
-            const cardsBtn = document.getElementById('viewCardsBtn');
-
-            if (mode === 'list') {
-                listEl.classList.remove('hidden');
-                cardsEl.classList.add('hidden');
-                
-                listBtn.className = "px-3.5 py-1.5 rounded-md font-semibold text-xs sm:text-sm transition-all bg-white text-indigo-700 shadow-sm";
-                cardsBtn.className = "px-3.5 py-1.5 rounded-md font-semibold text-xs sm:text-sm transition-all text-indigo-200 hover:text-white";
+        function nextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
             } else {
-                listEl.classList.add('hidden');
-                cardsEl.classList.remove('hidden');
-                
-                cardsBtn.className = "px-3.5 py-1.5 rounded-md font-semibold text-xs sm:text-sm transition-all bg-white text-indigo-700 shadow-sm";
-                listBtn.className = "px-3.5 py-1.5 rounded-md font-semibold text-xs sm:text-sm transition-all text-indigo-200 hover:text-white";
-                
-                updateCardDisplay();
+                showResults();
             }
         }
 
-        // Keyboard navigation bindings
-        document.addEventListener('keydown', (e) => {
-            const cardsEl = document.getElementById('cardsView');
-            if (!cardsEl.classList.contains('hidden') && document.activeElement.tagName !== 'INPUT') {
-                if (e.code === 'Space') {
-                    e.preventDefault();
-                    flipCard();
-                } else if (e.code === 'ArrowRight') {
-                    nextCard();
-                } else if (e.code === 'ArrowLeft') {
-                    prevCard();
-                }
+        function showResults() {
+            elements.progressBar.style.width = '100%';
+            elements.quizScreen.style.display = 'none';
+            elements.resultsScreen.style.display = 'block';
+            
+            elements.finalScoreHeading.textContent = `${score} / ${quizData.length}`;
+            
+            const percentage = score / quizData.length;
+            if (percentage === 1) {
+                elements.scoreMessage.textContent = "Impeccable. You possess a native-level understanding of complex French pronouns.";
+            } else if (percentage >= 0.8) {
+                elements.scoreMessage.textContent = "Excellent work. You have mastered the vast majority of advanced pronoun rules.";
+            } else if (percentage >= 0.6) {
+                elements.scoreMessage.textContent = "Good effort. These are highly advanced concepts; review the explanations for the nuances you missed.";
+            } else {
+                elements.scoreMessage.textContent = "This assessment targets the most difficult edge cases in French grammar. Review the explanations and try again.";
             }
-        });
+        }
 
-        // Initialize application
-        updateCounters();
-        renderList(vocabularyData);
-        updateCardDisplay();
+        function restartQuiz() {
+            currentIdx = 0;
+            score = 0;
+            elements.quizScreen.style.display = 'block';
+            elements.resultsScreen.style.display = 'none';
+            loadQuestion();
+        }
+
+        // Initialize the first question on load
+        window.onload = loadQuestion;
     </script>
 </body>
 </html>
